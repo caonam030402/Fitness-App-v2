@@ -1,3 +1,4 @@
+import 'package:fit_ness/screens/bottom_navigation_page.dart';
 import 'package:fit_ness/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -7,10 +8,10 @@ class CustomNavigationHelper {
       CustomNavigationHelper._internal();
 
   static CustomNavigationHelper get instance => _instance;
+
   factory CustomNavigationHelper() {
     return _instance;
   }
-  static late final GoRouter router;
 
   static final GlobalKey<NavigatorState> parentNavigatorKey =
       GlobalKey<NavigatorState>();
@@ -30,16 +31,37 @@ class CustomNavigationHelper {
 
   CustomNavigationHelper._internal() {
     final routes = [
-      GoRoute(
-        path: "/",
-        pageBuilder: (context, GoRouterState state) {
+      StatefulShellRoute.indexedStack(
+        parentNavigatorKey: parentNavigatorKey,
+        branches: [
+          StatefulShellBranch(
+            navigatorKey: homeTabNavigatorKey,
+            routes: [
+              GoRoute(
+                path: "/",
+                pageBuilder: (context, GoRouterState state) {
+                  return getPage(
+                    child: const HomeScreen(),
+                    state: state,
+                  );
+                },
+              ),
+            ],
+          )
+        ],
+        pageBuilder: (
+          BuildContext context,
+          GoRouterState state,
+          StatefulNavigationShell navigationShell,
+        ) {
           return getPage(
-            child: const HomeScreen(),
+            child: BottomNavigationPage(
+              child: navigationShell,
+            ),
             state: state,
           );
         },
-      ),
-      // ... other routes
+      )
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
@@ -47,4 +69,14 @@ class CustomNavigationHelper {
       routes: routes,
     );
   }
+
+  static late final GoRouter router;
+
+  BuildContext get context =>
+      router.routerDelegate.navigatorKey.currentContext!;
+
+  GoRouterDelegate get routerDelegate => router.routerDelegate;
+
+  GoRouteInformationParser get routeInformationParser =>
+      router.routeInformationParser;
 }
