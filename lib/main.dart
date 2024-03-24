@@ -1,8 +1,11 @@
-import 'package:fit_ness/screens/home_screen.dart';
+import 'package:fit_ness/providers/dark_mode_provider.dart';
 import 'package:fit_ness/services/router_service.dart';
+import 'package:fit_ness/themes/app_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   CustomNavigationHelper.instance;
   runApp(const MyApp());
 }
@@ -10,12 +13,21 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: CustomNavigationHelper.router,
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => ThemeProvider()..init(),
+      child: Consumer(
+        builder: (context, ThemeProvider notifier, child) {
+          return MaterialApp.router(
+            themeMode: notifier.isDark ? ThemeMode.dark : ThemeMode.light,
+            darkTheme:
+                notifier.isDark ? AppThemes.darkTheme : AppThemes.lightTheme,
+            debugShowCheckedModeBanner: false,
+            routerConfig: CustomNavigationHelper.router,
+          );
+        },
+      ),
     );
   }
 }

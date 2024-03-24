@@ -1,5 +1,10 @@
+import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/screens/bottom_navigation_page.dart';
+import 'package:fit_ness/screens/daily_screen.dart';
+import 'package:fit_ness/screens/discover_screen.dart';
 import 'package:fit_ness/screens/home_screen.dart';
+import 'package:fit_ness/screens/me_screen.dart';
+import 'package:fit_ness/screens/personal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +22,18 @@ class CustomNavigationHelper {
       GlobalKey<NavigatorState>();
 
   static final GlobalKey<NavigatorState> homeTabNavigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> dailyTabNavigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> discoverTabNavigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> personalTabNavigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> meTabNavigatorKey =
       GlobalKey<NavigatorState>();
 
   static Page getPage({
@@ -38,10 +55,66 @@ class CustomNavigationHelper {
             navigatorKey: homeTabNavigatorKey,
             routes: [
               GoRoute(
-                path: "/",
+                path: PathRoute.home_screen,
                 pageBuilder: (context, GoRouterState state) {
                   return getPage(
                     child: const HomeScreen(),
+                    state: state,
+                  );
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: discoverTabNavigatorKey,
+            routes: [
+              GoRoute(
+                path: PathRoute.discover_screen,
+                pageBuilder: (context, GoRouterState state) {
+                  return getPage(
+                    child: const DiscoverScreen(),
+                    state: state,
+                  );
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: personalTabNavigatorKey,
+            routes: [
+              GoRoute(
+                path: PathRoute.personal_screen,
+                pageBuilder: (context, GoRouterState state) {
+                  return getPage(
+                    child: const PersonalScreen(),
+                    state: state,
+                  );
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: dailyTabNavigatorKey,
+            routes: [
+              GoRoute(
+                path: PathRoute.daily_screen,
+                pageBuilder: (context, GoRouterState state) {
+                  return getPage(
+                    child: const DailyScreen(),
+                    state: state,
+                  );
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: meTabNavigatorKey,
+            routes: [
+              GoRoute(
+                path: PathRoute.me_screen,
+                pageBuilder: (context, GoRouterState state) {
+                  return getPage(
+                    child: const MeScreen(),
                     state: state,
                   );
                 },
@@ -65,7 +138,7 @@ class CustomNavigationHelper {
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: "/",
+      initialLocation: PathRoute.home_screen,
       routes: routes,
     );
   }

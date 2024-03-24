@@ -15,41 +15,59 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  final _selectedIndex = ValueNotifier<int>(0);
+  final ValueNotifier<int> _selectedIndex = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
-    // can be wrapped in the SafeArea:
-    // body: SafeArea(
-    //   child: widget.child,
-    // ),
-
     return Scaffold(
       body: widget.child,
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          NavigationBar(
-            selectedIndex: _selectedIndex.value,
-            onDestinationSelected: (index) {
+          BottomNavigationBar(
+            showUnselectedLabels: true,
+            showSelectedLabels: true,
+            selectedItemColor: Colors.blueAccent,
+            unselectedItemColor: Colors.grey,
+            backgroundColor: Colors.black,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _selectedIndex.value,
+            onTap: (index) {
               widget.child.goBranch(
                 index,
                 initialLocation: index == widget.child.currentIndex,
               );
+
               setState(() {
                 _selectedIndex.value = index;
               });
             },
-            destinations: [
-              NavigationDestination(
-                icon: const Icon(FluentIcons.home_24_regular),
-                selectedIcon: const Icon(FluentIcons.home_24_filled),
-                label: 'Home',
+            items: const [
+              BottomNavigationBarItem(
+                backgroundColor: Colors.black,
+                icon: Icon(
+                  FluentIcons.timer_24_filled,
+                ),
+                label: 'Classic',
               ),
-              NavigationDestination(
-                icon: const Icon(FluentIcons.search_24_regular),
-                selectedIcon: const Icon(FluentIcons.search_24_filled),
-                label: 'Search',
+              BottomNavigationBarItem(
+                backgroundColor: Colors.black,
+                icon: Icon(FluentIcons.compass_northwest_24_filled),
+                label: 'Discover',
+              ),
+              BottomNavigationBarItem(
+                backgroundColor: Colors.black,
+                icon: Icon(FluentIcons.document_text_24_filled),
+                label: 'Personal',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(FluentIcons.calendar_24_filled),
+                label: 'Daily',
+              ),
+              BottomNavigationBarItem(
+                backgroundColor: Colors.black,
+                icon: Icon(FluentIcons.person_24_filled),
+                label: 'Me',
               ),
             ],
           ),

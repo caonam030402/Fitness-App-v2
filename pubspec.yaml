@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   go_router: ^13.2.1
   fluentui_system_icons: ^1.1.231
+  shared_preferences: ^2.2.2
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:
