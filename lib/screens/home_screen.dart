@@ -3,6 +3,7 @@ import 'package:fit_ness/components/organisms/card_slide_item.dart';
 import 'package:fit_ness/components/organisms/card_workout_item.dart';
 import 'package:fit_ness/models/workout.model.dart';
 import 'package:fit_ness/providers/dark_mode_provider.dart';
+import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _headerHome(context),
+              _targetHome(context),
               _slideCard(context),
               _workout(context)
             ],
@@ -77,7 +79,7 @@ Widget _headerHome(BuildContext context) {
 Widget _slideCard(BuildContext context) {
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     const SizedBox(
-      height: 10,
+      height: 15,
     ),
     Text(
       'My Plan',
@@ -159,6 +161,14 @@ Widget _workout(context) {
                         "https://img.freepik.com/free-photo/old-grey-wall-background_24837-414.jpg?t=st=1711893133~exp=1711896733~hmac=5de83149d893dcabc646de875ab96669ba2e9c183ccd5508a8381f0291215b0f&w=1380"),
                   ),
                 ),
+                Positioned(
+                    top: 0,
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.4),
+                    )),
                 Container(
                   height: 120,
                   padding: const EdgeInsets.all(AppStyles.paddingCard),
@@ -220,6 +230,105 @@ Widget _workout(context) {
           ],
         ),
       )
+    ],
+  );
+}
+
+Widget _targetHome(context) {
+  return Column(
+    children: [
+      const SizedBox(
+        height: 10,
+      ),
+      Row(children: [
+        Expanded(
+            child: Container(
+          padding: const EdgeInsets.all(AppStyles.paddingCard),
+          decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(AppStyles.borderRadiusCard)),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '1',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineLarge!
+                        .copyWith(fontWeight: FontWeight.w900),
+                  ),
+                  Text(
+                    'Day Streak',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontSize: 15),
+                  ),
+                  Text('Personal Best: 1',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: Colors.grey))
+                ],
+              ),
+              const Spacer(),
+              const Icon(
+                FluentIcons.fire_16_filled,
+                color: Colors.orange,
+                size: 30,
+              )
+            ],
+          ),
+        )),
+        const SizedBox(
+          width: 20,
+        ),
+        Expanded(
+            child: Container(
+          padding: const EdgeInsets.all(AppStyles.paddingCard),
+          decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(AppStyles.borderRadiusCard)),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '1/3',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineLarge!
+                        .copyWith(fontWeight: FontWeight.w900),
+                  ),
+                  Text(
+                    'This week',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontSize: 15),
+                  ),
+                  Text('In Total: 1',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: Colors.grey))
+                ],
+              ),
+              const Spacer(),
+              const Icon(
+                FluentIcons.calendar_16_filled,
+                color: AppColors.primaryColor,
+                size: 30,
+              )
+            ],
+          ),
+        ))
+      ]),
     ],
   );
 }

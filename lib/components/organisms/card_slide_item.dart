@@ -43,7 +43,7 @@ class CardSlideItem extends StatelessWidget {
                       child: Text(
                         'MASSIVE UPPER BODY',
                         style: AppTexts.darkTextTheme.headlineLarge!
-                            .copyWith(fontWeight: FontWeight.w700),
+                            .copyWith(fontWeight: FontWeight.w900),
                       ),
                     ),
                     const Spacer(),
