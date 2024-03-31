@@ -1,5 +1,9 @@
-import 'package:fit_ness/components/molecules/card-slide-item.dart';
+import 'package:fit_ness/API/workout_classic.api.dart';
+import 'package:fit_ness/components/organisms/card_slide_item.dart';
+import 'package:fit_ness/components/organisms/card_workout_item.dart';
+import 'package:fit_ness/models/workout.model.dart';
 import 'package:fit_ness/providers/dark_mode_provider.dart';
+import 'package:fit_ness/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -10,59 +14,67 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ThemeProvider notifier, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _headerHome(context, notifier),
-            _slideCard(context, notifier)
-          ],
+    return FutureBuilder<List<ClassicWorkout>>(
+      future: fetchListClassicWorkout(),
+      builder: (context, snapshot) {
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _headerHome(context),
+              _slideCard(context),
+              _workout(context)
+            ],
+          ),
         );
       },
     );
   }
 }
 
-Widget _headerHome(BuildContext context, ThemeProvider notifier) {
-  return Row(
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+Widget _headerHome(BuildContext context) {
+  return Consumer(
+    builder: (context, ThemeProvider notifier, child) {
+      return Row(
         children: [
-          const SizedBox(
-            height: 10,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                "SUNDAY, MARCH 24",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(fontWeight: FontWeight.w400),
+              ),
+              Text(
+                "HOME WORKOUT",
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+            ],
           ),
-          Text(
-            "SUNDAY, MARCH 24",
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall!
-                .copyWith(fontWeight: FontWeight.w400),
-          ),
-          Text(
-            "HOME WORKOUT",
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(fontWeight: FontWeight.w600),
+          const Spacer(),
+          GestureDetector(
+            onTap: () {
+              notifier.changeTheme();
+            },
+            child: Icon(notifier.isDark
+                ? FluentIcons.weather_sunny_16_filled
+                : FluentIcons.brightness_high_16_filled),
           ),
         ],
-      ),
-      const Spacer(),
-      GestureDetector(
-        onTap: () {
-          notifier.changeTheme();
-        },
-        child: Icon(notifier.isDark
-            ? FluentIcons.weather_sunny_16_filled
-            : FluentIcons.brightness_high_16_filled),
-      ),
-    ],
+      );
+    },
   );
 }
 
-Widget _slideCard(BuildContext context, ThemeProvider notifier) {
+Widget _slideCard(BuildContext context) {
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     const SizedBox(
       height: 10,
@@ -109,19 +121,105 @@ Widget _slideCard(BuildContext context, ThemeProvider notifier) {
   ]);
 }
 
-Widget _workout() {
-  return Container(
-      child: Column(
+Widget _workout(context) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      const SizedBox(
+        height: 20,
+      ),
+      Text(
+        'Classic Workouts',
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge!
+            .copyWith(fontWeight: FontWeight.w600),
+      ),
+      const SizedBox(
+        height: 10,
+      ),
       Container(
-        child: Row(
+        decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(AppStyles.borderRadiusCard)),
+        child: Column(
           children: [
-            Column(
-              children: [Text('5 workouts')],
+            Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(AppStyles.borderRadiusCard),
+                    child: Image.network(
+                        fit: BoxFit.cover,
+                        "https://img.freepik.com/free-photo/old-grey-wall-background_24837-414.jpg?t=st=1711893133~exp=1711896733~hmac=5de83149d893dcabc646de875ab96669ba2e9c183ccd5508a8381f0291215b0f&w=1380"),
+                  ),
+                ),
+                Container(
+                  height: 120,
+                  padding: const EdgeInsets.all(AppStyles.paddingCard),
+                  decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(AppStyles.paddingBothSides)),
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '5 workouts',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Beginner',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge!
+                                .copyWith(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                    height: 200,
+                    right: 0,
+                    child: Image.network(
+                        "https://firebasestorage.googleapis.com/v0/b/webecommerce-b9bf2.appspot.com/o/fitness%2Fs%E1%BA%A5gag.png?alt=media&token=14e59698-bdbb-4ce3-8679-33c91a5aa58f"))
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingCard),
+              child: Column(children: [
+                CardWorkoutItem(),
+                Divider(
+                  thickness: 0.2,
+                ),
+                CardWorkoutItem(),
+                Divider(
+                  thickness: 0.2,
+                ),
+                CardWorkoutItem(),
+              ]),
             )
           ],
         ),
       )
     ],
-  ));
+  );
 }

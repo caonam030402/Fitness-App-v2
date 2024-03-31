@@ -1,7 +1,15 @@
-// Future<List> fetchListClassicWorkout(String searchQuery) async {
-//   try {
-//     final classicWorkouts =
-//   } catch (e) {
-//     return
-//   }
-// }
+import 'package:fit_ness/models/workout.model.dart';
+import 'package:fit_ness/DB/classsic_workouts.db.dart';
+
+Future<List<ClassicWorkout>> fetchListClassicWorkout() async {
+  try {
+    List<ClassicWorkout> classicWorkout = classicWorkoutsDB.map((json) {
+      return ClassicWorkout.fromJson(json);
+    }).toList();
+
+    return classicWorkout;
+  } catch (e) {
+    print(e);
+    throw e;
+  }
+}

@@ -8,10 +8,12 @@ class AppThemes {
   static final lightTheme = ThemeData(
       colorScheme: const ColorScheme.light(primary: AppColors.primaryColor),
       brightness: Brightness.light,
-      textTheme: AppTexts.lightTextTheme);
+      textTheme: AppTexts.lightTextTheme,
+      cardColor: Colors.grey.withOpacity(0.1));
 
   static final darkTheme = ThemeData(
       colorScheme: const ColorScheme.dark(primary: AppColors.primaryColor),
       brightness: Brightness.dark,
-      textTheme: AppTexts.darkTextTheme);
+      textTheme: AppTexts.darkTextTheme,
+      cardColor: Colors.grey.withOpacity(0.1));
 }
