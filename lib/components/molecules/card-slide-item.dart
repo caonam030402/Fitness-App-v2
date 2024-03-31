@@ -1,3 +1,4 @@
+import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_texts.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class CardSlideItem extends StatelessWidget {
                       style: AppTexts.darkTextTheme.bodySmall,
                     ),
                     const Spacer(),
-                    Container(
+                    SizedBox(
                       width: 200,
                       child: Text(
                         'MASSIVE UPPER BODY',
@@ -54,18 +55,7 @@ class CardSlideItem extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      alignment: Alignment.center,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: const Text(
-                        'START',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    )
+                    const Button()
                   ],
                 ),
               ),
