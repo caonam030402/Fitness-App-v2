@@ -38,6 +38,7 @@ dependencies:
   fluentui_system_icons: ^1.1.231
   shared_preferences: ^2.2.2
   provider: ^6.1.2
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

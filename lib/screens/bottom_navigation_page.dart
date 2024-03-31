@@ -1,3 +1,4 @@
+import 'package:fit_ness/themes/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -19,59 +20,59 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: widget.child,
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          BottomNavigationBar(
-            showUnselectedLabels: true,
-            showSelectedLabels: true,
-            selectedItemColor: Colors.blueAccent,
-            unselectedItemColor: Colors.grey,
-            backgroundColor: Colors.black,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _selectedIndex.value,
-            onTap: (index) {
-              widget.child.goBranch(
-                index,
-                initialLocation: index == widget.child.currentIndex,
-              );
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppStyles.paddingBothSides),
+            child: widget.child),
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            BottomNavigationBar(
+              showUnselectedLabels: true,
+              showSelectedLabels: true,
+              selectedItemColor: Theme.of(context).colorScheme.primary,
+              unselectedItemColor: Colors.grey,
+              type: BottomNavigationBarType.fixed,
+              currentIndex: _selectedIndex.value,
+              onTap: (index) {
+                widget.child.goBranch(
+                  index,
+                  initialLocation: index == widget.child.currentIndex,
+                );
 
-              setState(() {
-                _selectedIndex.value = index;
-              });
-            },
-            items: const [
-              BottomNavigationBarItem(
-                backgroundColor: Colors.black,
-                icon: Icon(
-                  FluentIcons.timer_24_filled,
+                setState(() {
+                  _selectedIndex.value = index;
+                });
+              },
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    FluentIcons.timer_24_filled,
+                  ),
+                  label: 'Classic',
                 ),
-                label: 'Classic',
-              ),
-              BottomNavigationBarItem(
-                backgroundColor: Colors.black,
-                icon: Icon(FluentIcons.compass_northwest_24_filled),
-                label: 'Discover',
-              ),
-              BottomNavigationBarItem(
-                backgroundColor: Colors.black,
-                icon: Icon(FluentIcons.document_text_24_filled),
-                label: 'Personal',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(FluentIcons.calendar_24_filled),
-                label: 'Daily',
-              ),
-              BottomNavigationBarItem(
-                backgroundColor: Colors.black,
-                icon: Icon(FluentIcons.person_24_filled),
-                label: 'Me',
-              ),
-            ],
-          ),
-        ],
+                BottomNavigationBarItem(
+                  icon: Icon(FluentIcons.compass_northwest_24_filled),
+                  label: 'Discover',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(FluentIcons.document_text_24_filled),
+                  label: 'Personal',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(FluentIcons.calendar_24_filled),
+                  label: 'Daily',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(FluentIcons.person_24_filled),
+                  label: 'Me',
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

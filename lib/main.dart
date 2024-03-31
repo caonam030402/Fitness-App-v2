@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       child: Consumer(
         builder: (context, ThemeProvider notifier, child) {
           return MaterialApp.router(
+            theme: AppThemes.lightTheme,
             themeMode: notifier.isDark ? ThemeMode.dark : ThemeMode.light,
             darkTheme:
                 notifier.isDark ? AppThemes.darkTheme : AppThemes.lightTheme,
