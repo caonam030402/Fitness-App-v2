@@ -1,4 +1,5 @@
 import 'package:fit_ness/API/workout_classic.api.dart';
+import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/organisms/card_exercise_item.dart';
 import 'package:fit_ness/models/workout.model.dart';
 import 'package:fit_ness/themes/app_styles.dart';
@@ -20,32 +21,28 @@ class WorkoutDetailScreen extends StatelessWidget {
               if (workout == null) {
                 return Container();
               }
-
-              return CustomScrollView(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  SliverAppBar(
-                    centerTitle: true,
-                    stretch: true,
-                    pinned: true,
-                    floating: true,
-                    snap: false,
-                    title: Text(
-                      '${workout.title.toUpperCase()} ${workout.level.toUpperCase()}',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    toolbarHeight: kToolbarHeight,
-                    expandedHeight: 200,
-                    flexibleSpace: FlexibleSpaceBar(
-                      collapseMode: CollapseMode.parallax,
-                      stretchModes: [StretchMode.zoomBackground],
-                      background:
-                          Image.network(fit: BoxFit.cover, workout.image),
-                    ),
+              return Stack(
+                children: [
+                  CustomScrollView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      _appBar(context, workout),
+                      _bodyWorkoutDetail(context, workout)
+                    ],
                   ),
-                  _bodyWorkoutDetail(context, workout)
+                  const Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Padding(
+                        padding: EdgeInsets.all(AppStyles.paddingBothSides),
+                        child: Button(
+                          title: "Start",
+                          size: SizeButton.large,
+                        )),
+                  ),
                 ],
               );
             }),
@@ -54,10 +51,33 @@ class WorkoutDetailScreen extends StatelessWidget {
   }
 }
 
+_appBar(context, Workout workout) {
+  return SliverAppBar(
+    centerTitle: true,
+    stretch: true,
+    pinned: true,
+    floating: true,
+    snap: false,
+    title: Text(
+      '${workout.title.toUpperCase()} ${workout.level.toUpperCase()}',
+      style: Theme.of(context).textTheme.bodyLarge,
+    ),
+    toolbarHeight: kToolbarHeight,
+    expandedHeight: 200,
+    flexibleSpace: FlexibleSpaceBar(
+      collapseMode: CollapseMode.parallax,
+      stretchModes: const [StretchMode.zoomBackground],
+      background: Image.network(fit: BoxFit.cover, workout.image),
+    ),
+  );
+}
+
 Widget _bodyWorkoutDetail(context, Workout workout) {
   return SliverToBoxAdapter(
-      child: Container(
-          padding: const EdgeInsets.all(AppStyles.paddingCard),
+      child: Stack(
+    children: [
+      Container(
+          padding: const EdgeInsets.all(AppStyles.paddingBothSides),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +182,7 @@ Widget _bodyWorkoutDetail(context, Workout workout) {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Column(
@@ -172,5 +192,7 @@ Widget _bodyWorkoutDetail(context, Workout workout) {
                 }),
               )
             ],
-          )));
+          )),
+    ],
+  ));
 }

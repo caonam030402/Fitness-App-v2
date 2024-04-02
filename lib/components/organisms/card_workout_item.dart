@@ -18,7 +18,7 @@ class CardWorkoutItem extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 2),
+            padding: const EdgeInsets.symmetric(vertical: 2),
             child: Row(
               children: [
                 ClipRRect(
@@ -27,7 +27,7 @@ class CardWorkoutItem extends StatelessWidget {
                   child: Image.network(
                       width: 80, height: 80, fit: BoxFit.cover, workout.image),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Column(
@@ -46,8 +46,8 @@ class CardWorkoutItem extends StatelessWidget {
                     )
                   ],
                 ),
-                Spacer(),
-                Icon(
+                const Spacer(),
+                const Icon(
                   FluentIcons.arrow_circle_right_16_filled,
                   color: Colors.grey,
                   size: 18,
@@ -55,7 +55,7 @@ class CardWorkoutItem extends StatelessWidget {
               ],
             ),
           ),
-          Divider(
+          const Divider(
             thickness: 0.1,
           )
         ],

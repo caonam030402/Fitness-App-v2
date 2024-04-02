@@ -55,7 +55,12 @@ class CardSlideItem extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    const Button()
+                    const Button(
+                      title: "Start",
+                      backgroundColor: Colors.white,
+                      textColor: AppColors.primaryColor,
+                      size: SizeButton.small,
+                    )
                   ],
                 ),
               ),
