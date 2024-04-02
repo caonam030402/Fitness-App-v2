@@ -45,17 +45,18 @@ class Exercise {
 class Workout {
   final String id;
   final String title;
+  final String level;
   final String image;
   final String time;
   final List<Exercise> exercises;
 
-  Workout({
-    required this.id,
-    required this.title,
-    required this.image,
-    required this.time,
-    required this.exercises,
-  });
+  Workout(
+      {required this.id,
+      required this.title,
+      required this.image,
+      required this.time,
+      required this.exercises,
+      required this.level});
 
   factory Workout.fromJson(Map<String, dynamic> json) {
     List<Exercise> exercises = [];
@@ -65,6 +66,7 @@ class Workout {
     return Workout(
       id: json['id'],
       title: json['title'],
+      level: json['level'],
       image: json['image'],
       time: json['time'],
       exercises: exercises,
@@ -75,6 +77,7 @@ class Workout {
     return {
       'id': id,
       'title': title,
+      'level': level,
       'image': image,
       'time': time,
       'exercises': exercises.map((exercise) => exercise.toJson()).toList(),

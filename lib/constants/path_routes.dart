@@ -4,4 +4,5 @@ class PathRoute {
   static const discover_screen = '/discover';
   static const me_screen = '/me';
   static const personal_screen = '/personal';
+  static const workout_detail = '/workout_detail';
 }

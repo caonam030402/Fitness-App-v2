@@ -13,3 +13,24 @@ Future<List<ClassicWorkout>> fetchListClassicWorkout() async {
     throw e;
   }
 }
+
+Future<Workout> fetchDetaitWorkout(
+    String idClassicWorkout, String idWorkout) async {
+  try {
+    List<ClassicWorkout> classicWorkouts = classicWorkoutsDB.map((json) {
+      return ClassicWorkout.fromJson(json);
+    }).toList();
+
+    final classicWorkout = classicWorkouts.firstWhere((classsicWorkout) {
+      return classsicWorkout.id == idClassicWorkout;
+    });
+
+    final workout =
+        classicWorkout.list.firstWhere((workout) => workout.id == idWorkout);
+
+    return workout;
+  } catch (e) {
+    print(e);
+    throw e;
+  }
+}

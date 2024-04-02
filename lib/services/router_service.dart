@@ -5,6 +5,7 @@ import 'package:fit_ness/screens/discover_screen.dart';
 import 'package:fit_ness/screens/home_screen.dart';
 import 'package:fit_ness/screens/me_screen.dart';
 import 'package:fit_ness/screens/personal_screen.dart';
+import 'package:fit_ness/screens/workout_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -34,6 +35,9 @@ class CustomNavigationHelper {
       GlobalKey<NavigatorState>();
 
   static final GlobalKey<NavigatorState> meTabNavigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> workoutDetailKey =
       GlobalKey<NavigatorState>();
 
   static Page getPage({
@@ -120,7 +124,7 @@ class CustomNavigationHelper {
                 },
               ),
             ],
-          )
+          ),
         ],
         pageBuilder: (
           BuildContext context,
@@ -134,7 +138,11 @@ class CustomNavigationHelper {
             state: state,
           );
         },
-      )
+      ),
+      GoRoute(
+        path: PathRoute.workout_detail,
+        builder: (context, state) => WorkoutDetailScreen(),
+      ),
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,

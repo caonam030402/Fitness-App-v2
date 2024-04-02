@@ -18,6 +18,8 @@ class HomeScreen extends StatelessWidget {
     return FutureBuilder<List<ClassicWorkout>>(
       future: fetchListClassicWorkout(),
       builder: (context, snapshot) {
+        final dataWorkout = snapshot.data;
+
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,7 +27,7 @@ class HomeScreen extends StatelessWidget {
               _headerHome(context),
               _targetHome(context),
               _slideCard(context),
-              _workout(context)
+              _workout(context, dataWorkout)
             ],
           ),
         );
@@ -123,7 +125,7 @@ Widget _slideCard(BuildContext context) {
   ]);
 }
 
-Widget _workout(context) {
+Widget _workout(context, List<ClassicWorkout>? dataWorkout) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -140,96 +142,106 @@ Widget _workout(context) {
       const SizedBox(
         height: 10,
       ),
-      Container(
-        decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(AppStyles.borderRadiusCard)),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  bottom: 0,
-                  right: 0,
-                  left: 0,
-                  child: ClipRRect(
-                    borderRadius:
-                        BorderRadius.circular(AppStyles.borderRadiusCard),
-                    child: Image.network(
-                        fit: BoxFit.cover,
-                        "https://img.freepik.com/free-photo/old-grey-wall-background_24837-414.jpg?t=st=1711893133~exp=1711896733~hmac=5de83149d893dcabc646de875ab96669ba2e9c183ccd5508a8381f0291215b0f&w=1380"),
-                  ),
-                ),
-                Positioned(
-                    top: 0,
-                    bottom: 0,
-                    right: 0,
-                    left: 0,
-                    child: Container(
-                      color: Colors.black.withOpacity(0.4),
-                    )),
-                Container(
-                  height: 120,
-                  padding: const EdgeInsets.all(AppStyles.paddingCard),
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(AppStyles.paddingBothSides)),
-                  child: Row(
+      Column(
+          children: dataWorkout != null
+              ? List.generate(dataWorkout.length, (index) {
+                  final classicWorkout = dataWorkout[index];
+                  return Column(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '5 workouts',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.white),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Beginner',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge!
-                                .copyWith(color: Colors.white),
-                          )
-                        ],
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(
+                                AppStyles.borderRadiusCard)),
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Positioned(
+                                  top: 0,
+                                  bottom: 0,
+                                  right: 0,
+                                  left: 0,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        AppStyles.borderRadiusCard),
+                                    child: Image.network(
+                                        fit: BoxFit.cover,
+                                        "https://img.freepik.com/free-photo/old-grey-wall-background_24837-414.jpg?t=st=1711893133~exp=1711896733~hmac=5de83149d893dcabc646de875ab96669ba2e9c183ccd5508a8381f0291215b0f&w=1380"),
+                                  ),
+                                ),
+                                Positioned(
+                                    top: 0,
+                                    bottom: 0,
+                                    right: 0,
+                                    left: 0,
+                                    child: Container(
+                                      color: Colors.black.withOpacity(0.4),
+                                    )),
+                                Container(
+                                  height: 120,
+                                  padding: const EdgeInsets.all(
+                                      AppStyles.paddingCard),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          AppStyles.paddingBothSides)),
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '${classicWorkout.list.length} workouts',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
+                                                .copyWith(color: Colors.white),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            classicWorkout.title,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineLarge!
+                                                .copyWith(color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                    height: 250,
+                                    right: 0,
+                                    child: Image.network(classicWorkout.image))
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: AppStyles.paddingCard,
+                                  vertical: 10),
+                              child: Column(
+                                  children: List.generate(
+                                      classicWorkout.list.length, (index) {
+                                final workout = classicWorkout.list[index];
+                                return CardWorkoutItem(workout: workout);
+                              })),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                     ],
-                  ),
-                ),
-                Positioned(
-                    height: 200,
-                    right: 0,
-                    child: Image.network(
-                        "https://firebasestorage.googleapis.com/v0/b/webecommerce-b9bf2.appspot.com/o/fitness%2Fs%E1%BA%A5gag.png?alt=media&token=14e59698-bdbb-4ce3-8679-33c91a5aa58f"))
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingCard),
-              child: Column(children: [
-                CardWorkoutItem(),
-                Divider(
-                  thickness: 0.2,
-                ),
-                CardWorkoutItem(),
-                Divider(
-                  thickness: 0.2,
-                ),
-                CardWorkoutItem(),
-              ]),
-            )
-          ],
-        ),
-      )
+                  );
+                })
+              : [Container()])
     ],
   );
 }

@@ -5,9 +5,9 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class CardWorkoutItem extends StatelessWidget {
-  final Workout workout;
-  const CardWorkoutItem({super.key, required this.workout});
+class CardExerciseItem extends StatelessWidget {
+  final Exercise exercise;
+  const CardExerciseItem({super.key, required this.exercise});
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +18,17 @@ class CardWorkoutItem extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 2),
+            padding: EdgeInsets.symmetric(vertical: 8),
             child: Row(
               children: [
                 ClipRRect(
                   borderRadius:
                       BorderRadius.circular(AppStyles.borderRadiusCard),
                   child: Image.network(
-                      width: 80, height: 80, fit: BoxFit.cover, workout.image),
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                      exercise.images[1]),
                 ),
                 SizedBox(
                   width: 10,
@@ -34,11 +37,11 @@ class CardWorkoutItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${workout.title} - ${workout.level}',
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      exercise.title.toUpperCase(),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
-                      workout.time,
+                      exercise.fitTime.toString(),
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
@@ -47,11 +50,11 @@ class CardWorkoutItem extends StatelessWidget {
                   ],
                 ),
                 Spacer(),
-                Icon(
-                  FluentIcons.arrow_circle_right_16_filled,
-                  color: Colors.grey,
-                  size: 18,
-                )
+                // Icon(
+                //   FluentIcons.arrow_circle_right_16_filled,
+                //   color: Colors.grey,
+                //   size: 18,
+                // )
               ],
             ),
           ),
