@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:fit_ness/components/atoms/button.dart';
+import 'package:fit_ness/providers/time_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TimeReadyToGo extends StatefulWidget {
   const TimeReadyToGo({super.key});
@@ -11,6 +13,7 @@ class TimeReadyToGo extends StatefulWidget {
 }
 
 class _TimeReadyToGoState extends State<TimeReadyToGo> {
+  late TimeReadyToGoProvider timeReadyToGoProvider;
   int _countdownSeconds = 4;
   late Timer _timer;
 
@@ -28,12 +31,16 @@ class _TimeReadyToGoState extends State<TimeReadyToGo> {
 
   void _startCountdown() {
     const oneSecond = Duration(seconds: 1);
+    timeReadyToGoProvider =
+        Provider.of<TimeReadyToGoProvider>(context, listen: false);
+
     _timer = Timer.periodic(oneSecond, (timer) {
       setState(() {
         if (_countdownSeconds > 0) {
           _countdownSeconds--;
         } else {
           timer.cancel();
+          timeReadyToGoProvider.update();
         }
       });
     });
@@ -41,7 +48,6 @@ class _TimeReadyToGoState extends State<TimeReadyToGo> {
 
   @override
   Widget build(BuildContext context) {
-    print(_countdownSeconds);
     final themeData = Theme.of(context);
     return _countdownSeconds != 0
         ? Stack(

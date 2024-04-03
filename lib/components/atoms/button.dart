@@ -4,38 +4,43 @@ import 'package:flutter/material.dart';
 enum SizeButton { small, medium, large }
 
 class Button extends StatelessWidget {
+  final void Function()? onTap;
   final Color backgroundColor;
   final Color textColor;
   final SizeButton size;
   final String title;
+  final double width;
   const Button({
     super.key,
     required this.size,
     this.backgroundColor = AppColors.primaryColor,
     this.textColor = Colors.white,
     required this.title,
+    this.onTap,
+    this.width = double.maxFinite,
   });
 
   @override
   Widget build(BuildContext context) {
-    double _buttonSize;
+    double buttonSize;
     switch (size) {
       case SizeButton.small:
-        _buttonSize = 8;
+        buttonSize = 8;
         break;
       case SizeButton.medium:
-        _buttonSize = 12;
+        buttonSize = 12;
         break;
       case SizeButton.large:
-        _buttonSize = 15;
+        buttonSize = 15;
         break;
     }
 
     return GestureDetector(
+      onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(_buttonSize),
+        padding: EdgeInsets.all(buttonSize),
         alignment: Alignment.center,
-        width: double.maxFinite,
+        width: width,
         decoration: BoxDecoration(
             color: backgroundColor, borderRadius: BorderRadius.circular(30)),
         child: Text(

@@ -5,6 +5,7 @@ import 'package:fit_ness/screens/discover_screen.dart';
 import 'package:fit_ness/screens/home_screen.dart';
 import 'package:fit_ness/screens/me_screen.dart';
 import 'package:fit_ness/screens/personal_screen.dart';
+import 'package:fit_ness/screens/start_workout_sreen.dart';
 import 'package:fit_ness/screens/workout_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -141,12 +142,16 @@ class CustomNavigationHelper {
       ),
       GoRoute(
         path: PathRoute.workout_detail,
-        builder: (context, state) => WorkoutDetailScreen(),
+        builder: (context, state) => const WorkoutDetailScreen(),
+      ),
+      GoRoute(
+        path: PathRoute.start_workout,
+        builder: (context, state) => const StartWorkoutScreen(),
       ),
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: PathRoute.home_screen,
+      initialLocation: PathRoute.start_workout,
       routes: routes,
     );
   }

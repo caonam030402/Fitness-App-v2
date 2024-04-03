@@ -1,9 +1,11 @@
 import 'package:fit_ness/API/workout_classic.api.dart';
 import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/organisms/card_exercise_item.dart';
+import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/models/workout.model.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class WorkoutDetailScreen extends StatelessWidget {
   const WorkoutDetailScreen({super.key});
@@ -11,7 +13,7 @@ class WorkoutDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top: false,
+      top: true,
       child: Scaffold(
         body: FutureBuilder(
             future:
@@ -32,13 +34,16 @@ class WorkoutDetailScreen extends StatelessWidget {
                       _bodyWorkoutDetail(context, workout)
                     ],
                   ),
-                  const Positioned(
+                  Positioned(
                     left: 0,
                     right: 0,
                     bottom: 0,
                     child: Padding(
                         padding: EdgeInsets.all(AppStyles.paddingBothSides),
                         child: Button(
+                          onTap: () {
+                            context.push(PathRoute.start_workout);
+                          },
                           title: "Start",
                           size: SizeButton.large,
                         )),

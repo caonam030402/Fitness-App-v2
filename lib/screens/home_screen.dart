@@ -15,23 +15,26 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ClassicWorkout>>(
-      future: fetchListClassicWorkout(),
-      builder: (context, snapshot) {
-        final dataWorkout = snapshot.data;
+    return SafeArea(
+      top: false,
+      child: FutureBuilder<List<ClassicWorkout>>(
+        future: fetchListClassicWorkout(),
+        builder: (context, snapshot) {
+          final dataWorkout = snapshot.data;
 
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _headerHome(context),
-              _targetHome(context),
-              _slideCard(context),
-              _workout(context, dataWorkout)
-            ],
-          ),
-        );
-      },
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _headerHome(context),
+                _targetHome(context),
+                _slideCard(context),
+                _workout(context, dataWorkout)
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
