@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:fit_ness/components/atoms/button.dart';
-import 'package:fit_ness/providers/time_provider.dart';
+import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +13,8 @@ class TimeReadyToGo extends StatefulWidget {
 }
 
 class _TimeReadyToGoState extends State<TimeReadyToGo> {
-  late TimeReadyToGoProvider timeReadyToGoProvider;
-  int _countdownSeconds = 4;
+  late StartWorkoutProvider startWorkoutProvider;
+  int _countdownSeconds = 10;
   late Timer _timer;
 
   @override
@@ -31,8 +31,8 @@ class _TimeReadyToGoState extends State<TimeReadyToGo> {
 
   void _startCountdown() {
     const oneSecond = Duration(seconds: 1);
-    timeReadyToGoProvider =
-        Provider.of<TimeReadyToGoProvider>(context, listen: false);
+    startWorkoutProvider =
+        Provider.of<StartWorkoutProvider>(context, listen: false);
 
     _timer = Timer.periodic(oneSecond, (timer) {
       setState(() {
@@ -40,7 +40,7 @@ class _TimeReadyToGoState extends State<TimeReadyToGo> {
           _countdownSeconds--;
         } else {
           timer.cancel();
-          timeReadyToGoProvider.update();
+          startWorkoutProvider.update();
         }
       });
     });
@@ -95,10 +95,15 @@ class _TimeReadyToGoState extends State<TimeReadyToGo> {
                     const SizedBox(
                       height: 90,
                     ),
-                    const Button(
+                    Button(
                       size: SizeButton.large,
                       title: "Start!",
                       width: 200,
+                      onTap: () {
+                        setState(() {
+                          _countdownSeconds = 0;
+                        });
+                      },
                     ),
                     const SizedBox(
                       height: 90,
