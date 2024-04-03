@@ -3,9 +3,7 @@ import 'dart:ffi';
 import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class Controller extends StatelessWidget {
