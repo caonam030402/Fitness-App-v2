@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:fit_ness/components/molecules/controller.dart';
 import 'package:fit_ness/components/templates_/time_ready_to_go.dart';
-import 'package:fit_ness/components/templates_/workout_completed.dart';
+import 'package:fit_ness/constants/path_routes.dart';
+import 'package:fit_ness/screens/workout_completed.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fit_ness/themes/app_texts.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class StartWorkoutScreen extends StatelessWidget {
@@ -15,32 +17,31 @@ class StartWorkoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int listLenght = 3;
+    int listLenght = 5;
     return SafeArea(
       top: false,
       child: Scaffold(
         backgroundColor: Colors.white,
         body:
             Consumer<StartWorkoutProvider>(builder: (context, provider, child) {
-          return listLenght < 4
-              ? WorkoutCompleted()
-              : IndexedStack(
-                  index: provider.currenIndexPage,
-                  children: List.generate(
-                    listLenght,
-                    (index) => Stack(
-                      children: [
-                        Text(
-                          index.toString(),
-                          style: const TextStyle(
-                              fontSize: 50, color: Colors.black),
-                        ),
-                        index == 0 ? const TimeReadyToGo() : Container(),
-                        _body(context, UniqueKey(), provider),
-                      ],
-                    ),
-                  ),
-                );
+          if (listLenght < provider.currenIndexPage + 1) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.push(PathRoute.workout_completed);
+            });
+            return Container();
+          }
+          return IndexedStack(
+            index: provider.currenIndexPage,
+            children: List.generate(
+              listLenght,
+              (index) => Stack(
+                children: [
+                  index == 0 ? const TimeReadyToGo() : Container(),
+                  _body(context, UniqueKey(), provider),
+                ],
+              ),
+            ),
+          );
         }),
       ),
     );
