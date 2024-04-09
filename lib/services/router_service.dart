@@ -1,10 +1,12 @@
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/screens/bottom_navigation_page.dart';
+import 'package:fit_ness/screens/choose_coach.dart';
 import 'package:fit_ness/screens/daily_screen.dart';
 import 'package:fit_ness/screens/discover_screen.dart';
 import 'package:fit_ness/screens/home_screen.dart';
 import 'package:fit_ness/screens/me_screen.dart';
 import 'package:fit_ness/screens/personal_screen.dart';
+import 'package:fit_ness/screens/workout_setting.dart';
 import 'package:fit_ness/screens/workout_start_sreen.dart';
 import 'package:fit_ness/screens/workout_completed.dart';
 import 'package:fit_ness/screens/workout_detail_screen.dart';
@@ -153,6 +155,15 @@ class CustomNavigationHelper {
         path: PathRoute.workout_completed,
         builder: (context, state) => const WorkoutCompleted(),
       ),
+      GoRoute(
+          path: PathRoute.workout_setting,
+          builder: (context, state) => const WorkoutSetting(),
+          routes: [
+            GoRoute(
+              path: PathRoute.choose_coach,
+              builder: (context, state) => const ChooseCoach(),
+            ),
+          ]),
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
