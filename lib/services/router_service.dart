@@ -5,7 +5,7 @@ import 'package:fit_ness/screens/discover_screen.dart';
 import 'package:fit_ness/screens/home_screen.dart';
 import 'package:fit_ness/screens/me_screen.dart';
 import 'package:fit_ness/screens/personal_screen.dart';
-import 'package:fit_ness/screens/start_workout_sreen.dart';
+import 'package:fit_ness/screens/workout_start_sreen.dart';
 import 'package:fit_ness/screens/workout_completed.dart';
 import 'package:fit_ness/screens/workout_detail_screen.dart';
 import 'package:flutter/material.dart';

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:fit_ness/components/molecules/controller.dart';
 import 'package:fit_ness/components/templates_/time_ready_to_go.dart';
 import 'package:fit_ness/constants/path_routes.dart';
-import 'package:fit_ness/screens/workout_completed.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fit_ness/themes/app_texts.dart';
@@ -36,6 +35,7 @@ class StartWorkoutScreen extends StatelessWidget {
               listLenght,
               (index) => Stack(
                 children: [
+                  // WorkoutPause(),
                   index == 0 ? const TimeReadyToGo() : Container(),
                   _body(context, UniqueKey(), provider),
                 ],
@@ -162,34 +162,46 @@ class _ControllerExerciseState extends State<ControllerExercise> {
   late int _countdownSeconds;
   late Timer _timer;
   int id = 1;
+  bool isPaused = false;
 
   @override
   void initState() {
     super.initState();
     _countdownSeconds = widget.seconds;
+
     _startCountdown();
   }
 
-  @override
-  void dispose() {
+  void _pauseCountdown() {
     _timer.cancel();
-    super.dispose();
+    setState(() {
+      isPaused = true;
+    });
   }
 
   void _startCountdown() {
     const oneSecond = Duration(seconds: 1);
-    _timer = Timer.periodic(oneSecond, (timer) {
-      setState(() {
-        if (_countdownSeconds > 0) {
-          _countdownSeconds--;
-        } else {
-          timer.cancel();
-          final startWorkoutProvider =
-              Provider.of<StartWorkoutProvider>(context, listen: false);
-          startWorkoutProvider.nextPage();
-        }
+    if (!isPaused) {
+      _timer = Timer.periodic(oneSecond, (timer) {
+        setState(() {
+          if (_countdownSeconds > 0) {
+            _countdownSeconds--;
+          } else {
+            timer.cancel();
+            final startWorkoutProvider =
+                Provider.of<StartWorkoutProvider>(context, listen: false);
+            startWorkoutProvider.nextPage();
+          }
+        });
       });
+    }
+  }
+
+  void _resumeCountdown() {
+    setState(() {
+      isPaused = false;
     });
+    _startCountdown();
   }
 
   String formatSeconds(int seconds) {
@@ -199,7 +211,15 @@ class _ControllerExerciseState extends State<ControllerExercise> {
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(isPaused);
+    print(_countdownSeconds);
     return Container(
       decoration: const BoxDecoration(
           color: Colors.black,
@@ -222,7 +242,8 @@ class _ControllerExerciseState extends State<ControllerExercise> {
               style: AppTexts.darkTextTheme.headlineSmall!
                   .copyWith(fontWeight: FontWeight.w600, fontSize: 70)),
           const Spacer(),
-          const Controller(
+          Controller(
+            pauseCountdown: _pauseCountdown,
             time: 10,
           ),
           const SizedBox(

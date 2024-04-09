@@ -8,7 +8,12 @@ import 'package:provider/provider.dart';
 
 class Controller extends StatelessWidget {
   final int time;
-  const Controller({super.key, required this.time});
+  final void Function() pauseCountdown;
+  const Controller({
+    super.key,
+    required this.time,
+    required this.pauseCountdown,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,38 +44,43 @@ class Controller extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          Container(
-            clipBehavior: Clip.hardEdge,
-            width: 150,
-            height: 55,
-            decoration: BoxDecoration(
-                color: AppColors.primaryColor.withOpacity(0.8),
-                borderRadius: const BorderRadius.all(Radius.circular(100))),
-            child: Stack(
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(seconds: 2),
-                  decoration: const BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius:
-                          BorderRadius.horizontal(left: Radius.circular(100))),
-                  width: percent as double,
-                  height: 55,
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(100))),
-                  width: 150,
-                  height: 55,
-                  child: const Center(
-                    child: Icon(
-                      FluentIcons.pause_12_filled,
-                      size: 40,
-                      color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              pauseCountdown();
+            },
+            child: Container(
+              clipBehavior: Clip.hardEdge,
+              width: 150,
+              height: 55,
+              decoration: BoxDecoration(
+                  color: AppColors.primaryColor.withOpacity(0.8),
+                  borderRadius: const BorderRadius.all(Radius.circular(100))),
+              child: Stack(
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(seconds: 2),
+                    decoration: const BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.horizontal(
+                            left: Radius.circular(100))),
+                    width: percent as double,
+                    height: 55,
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(100))),
+                    width: 150,
+                    height: 55,
+                    child: const Center(
+                      child: Icon(
+                        FluentIcons.pause_12_filled,
+                        size: 40,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           const Spacer(),

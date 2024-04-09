@@ -26,7 +26,7 @@ class WorkoutCompleted extends StatelessWidget {
                 right: 0,
                 bottom: 0,
                 child: Padding(
-                  padding: EdgeInsets.all(AppStyles.paddingBothSides),
+                  padding: const EdgeInsets.all(AppStyles.paddingBothSides),
                   child: Button(
                     size: SizeButton.large,
                     title: "FINISH",
