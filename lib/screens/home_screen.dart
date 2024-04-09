@@ -23,14 +23,18 @@ class HomeScreen extends StatelessWidget {
           final dataWorkout = snapshot.data;
 
           return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _headerHome(context),
-                _targetHome(context),
-                _slideCard(context),
-                _workout(context, dataWorkout)
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppStyles.paddingBothSides),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _headerHome(context),
+                  _targetHome(context),
+                  _slideCard(context),
+                  _workout(context, dataWorkout)
+                ],
+              ),
             ),
           );
         },

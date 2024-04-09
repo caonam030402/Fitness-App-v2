@@ -22,10 +22,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppStyles.paddingBothSides),
-            child: widget.child),
+        body: widget.child,
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[

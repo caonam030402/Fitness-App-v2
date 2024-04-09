@@ -156,7 +156,7 @@ class CustomNavigationHelper {
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: PathRoute.home_screen,
+      initialLocation: PathRoute.me_screen,
       routes: routes,
     );
   }
