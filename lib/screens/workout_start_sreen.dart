@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fit_ness/components/molecules/controller.dart';
+import 'package:fit_ness/components/molecules/video_item.dart';
 import 'package:fit_ness/components/templates_/time_ready_to_go.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
@@ -10,6 +11,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
 class StartWorkoutScreen extends StatelessWidget {
   const StartWorkoutScreen({super.key});
@@ -36,8 +38,8 @@ class StartWorkoutScreen extends StatelessWidget {
               (index) => Stack(
                 children: [
                   // WorkoutPause(),
-                  index == 0 ? const TimeReadyToGo() : Container(),
                   _body(context, UniqueKey(), provider),
+                  index == 0 ? const TimeReadyToGo() : Container(),
                 ],
               ),
             ),
@@ -49,76 +51,52 @@ class StartWorkoutScreen extends StatelessWidget {
 }
 
 Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
-  return SizedBox(
-    key: key,
-    height: MediaQuery.of(context).size.height,
-    child: Column(
-      children: [
-        const SizedBox(height: 50),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppStyles.paddingBothSides),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(10, (index) {
-                  return Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 20,
-                        height: 5,
-                        decoration: BoxDecoration(
-                            color: Colors.black26,
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                      const SizedBox(width: 10),
-                    ],
-                  );
-                }),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+  return Stack(
+    children: [
+      SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: VideoItem(
+          videoPlayerController:
+              VideoPlayerController.asset('assets/videos/0410(2).mp4'),
+          looping: true,
+          autoplay: true,
+        ),
+      ),
+      SizedBox(
+        key: key,
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppStyles.paddingBothSides),
+              child: Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey.withOpacity(0.2)),
-                    width: 32,
-                    height: 32,
-                    child: const Center(
-                      child: Icon(
-                        FluentIcons.dismiss_12_filled,
-                        size: 13,
-                        color: Colors.black,
-                      ),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(10, (index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width / 20,
+                            height: 5,
+                            decoration: BoxDecoration(
+                                color: Colors.black26,
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
+                          const SizedBox(width: 10),
+                        ],
+                      );
+                    }),
                   ),
-                  const Spacer(),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            "SIT-UPS",
-                            style: AppTexts.lightTextTheme.bodyLarge!
-                                .copyWith(fontWeight: FontWeight.w800),
-                          ),
-                          Text(
-                            "Next",
-                            style: AppTexts.lightTextTheme.bodyMedium!
-                                .copyWith(fontWeight: FontWeight.w400),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
                       Container(
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -127,25 +105,63 @@ Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
                         height: 32,
                         child: const Center(
                           child: Icon(
-                            FluentIcons.settings_16_filled,
-                            size: 15,
+                            FluentIcons.dismiss_12_filled,
+                            size: 13,
                             color: Colors.black,
                           ),
                         ),
+                      ),
+                      const Spacer(),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "SIT-UPS",
+                                style: AppTexts.lightTextTheme.bodyLarge!
+                                    .copyWith(fontWeight: FontWeight.w800),
+                              ),
+                              Text(
+                                "Next",
+                                style: AppTexts.lightTextTheme.bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.w400),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey.withOpacity(0.2)),
+                            width: 32,
+                            height: 32,
+                            child: const Center(
+                              child: Icon(
+                                FluentIcons.settings_16_filled,
+                                size: 15,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            const Spacer(),
+            provider.isTimeUpReadyTogo
+                ? const ControllerExercise(seconds: 5)
+                : Container()
+          ],
         ),
-        const Spacer(),
-        provider.isTimeUpReadyTogo
-            ? const ControllerExercise(seconds: 5)
-            : Container()
-      ],
-    ),
+      ),
+    ],
   );
 }
 
@@ -218,8 +234,6 @@ class _ControllerExerciseState extends State<ControllerExercise> {
 
   @override
   Widget build(BuildContext context) {
-    print(isPaused);
-    print(_countdownSeconds);
     return Container(
       decoration: const BoxDecoration(
           color: Colors.black,

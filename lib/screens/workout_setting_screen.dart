@@ -7,8 +7,8 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class WorkoutSetting extends StatelessWidget {
-  const WorkoutSetting({super.key});
+class WorkoutSettingScreen extends StatelessWidget {
+  const WorkoutSettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

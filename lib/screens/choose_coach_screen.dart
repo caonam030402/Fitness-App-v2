@@ -5,14 +5,14 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ChooseCoach extends StatefulWidget {
-  const ChooseCoach({super.key});
+class ChooseCoachScreen extends StatefulWidget {
+  const ChooseCoachScreen({super.key});
 
   @override
-  State<ChooseCoach> createState() => _ChooseCoachState();
+  State<ChooseCoachScreen> createState() => _ChooseCoachScreenState();
 }
 
-class _ChooseCoachState extends State<ChooseCoach> {
+class _ChooseCoachScreenState extends State<ChooseCoachScreen> {
   String selectItem = '';
 
   @override
