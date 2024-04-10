@@ -1,5 +1,8 @@
 import 'package:fit_ness/components/atoms/button.dart';
+import 'package:fit_ness/components/molecules/rule_picker.dart';
+import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
+import 'package:fit_ness/utilities/caculate_bmi.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -13,7 +16,7 @@ class ChooseHeight extends StatelessWidget {
       padding:
           const EdgeInsets.symmetric(horizontal: AppStyles.paddingBothSides),
       child: Column(
-        children: [_content(context), _main(context)],
+        children: [_content(context), const MainChoosePickWeight()],
       ),
     );
   }
@@ -60,86 +63,130 @@ Widget _content(context) {
   );
 }
 
-Widget _main(context) {
-  return Expanded(
-    child: Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-                child: GestureDetector(
-              child: Container(
-                height: 300,
-                decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(AppStyles.borderRadiusCard),
-                    color: Colors.grey.withOpacity(0.1)),
-                child: Column(
+List<RulerRange> ranges = const [
+  RulerRange(begin: 30, end: 250),
+];
+
+class MainChoosePickWeight extends StatefulWidget {
+  const MainChoosePickWeight({super.key});
+
+  @override
+  State<MainChoosePickWeight> createState() => _MainChoosePickWeightState();
+}
+
+class _MainChoosePickWeightState extends State<MainChoosePickWeight> {
+  RulerPickerController? _rulerPickerController;
+  num currentValue = 50.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _rulerPickerController = RulerPickerController();
+    _rulerPickerController!.value = currentValue;
+  }
+
+  @override
+  @override
+  void dispose() {
+    super.dispose();
+    _rulerPickerController?.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          RichText(
+              text: TextSpan(children: [
+            TextSpan(
+              text: currentValue.toString(),
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                  ),
+            ),
+            const TextSpan(
+              text: "Kg",
+            )
+          ])),
+          const SizedBox(
+            height: 20,
+          ),
+          RulerPicker(
+            onValueChanged: (value) {
+              setState(() {
+                currentValue = value;
+              });
+            },
+            rulerBackgroundColor: Colors.transparent,
+            controller: _rulerPickerController,
+            onBuildRulerScaleText: (index, value) {
+              return value.toInt().toString();
+            },
+            ranges: ranges,
+            width: MediaQuery.of(context).size.width -
+                AppStyles.paddingBothSides * 2,
+            height: 80,
+            rulerMarginTop: 8,
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Container(
+            padding: const EdgeInsets.all(AppStyles.paddingCard),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppStyles.borderRadiusCard),
+                color: Colors.grey.withOpacity(0.1)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Current BMI",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
                   children: [
-                    Image.network(
-                        "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
                     Text(
-                      "Male",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(fontWeight: FontWeight.w500),
+                      calculateBmi(170, currentValue).toStringAsFixed(1),
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryColor),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Flexible(
+                      child: Text(
+                        "Your have a great potenal to get in better shape, move now",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontWeight: FontWeight.w400),
+                      ),
                     )
                   ],
-                ),
-              ),
-            )),
-            const SizedBox(
-              width: 15,
+                )
+              ],
             ),
-            Expanded(
-                child: Container(
-              height: 300,
-              decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(AppStyles.borderRadiusCard),
-                  color: Colors.grey.withOpacity(0.1)),
-              child: Column(
-                children: [
-                  Image.network(
-                      "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
-                  Text(
-                    "Female",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(fontWeight: FontWeight.w500),
-                  )
-                ],
-              ),
-            )),
-          ],
-        ),
-        SizedBox(
-          height: 40,
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: Colors.grey.withOpacity(0.1)),
-          child: Text(
-            "Orthers/I'd rather not say",
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(fontWeight: FontWeight.w500),
+          ).animate().fadeIn(duration: 500.ms).slide(),
+          const Spacer(),
+          const Button(
+            title: "Next",
+            size: SizeButton.large,
+          ).animate().fadeIn(duration: 500.ms).slide(),
+          const SizedBox(
+            height: 30,
           ),
-        ).animate().fadeIn(duration: 500.ms).slide(),
-        const Spacer(),
-        Button(
-          title: "Next",
-          size: SizeButton.large,
-        ).animate().fadeIn(duration: 500.ms).slide(),
-        SizedBox(
-          height: 30,
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }

@@ -1,12 +1,11 @@
 import 'package:fit_ness/components/atoms/button.dart';
+import 'package:fit_ness/components/molecules/rule_picker.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fit_ness/utilities/caculate_bmi.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_ruler_picker/flutter_ruler_picker.dart';
-import 'package:provider/provider.dart';
 
 class ChooseWeight extends StatelessWidget {
   const ChooseWeight({super.key});
@@ -65,7 +64,7 @@ Widget _content(context) {
 }
 
 List<RulerRange> ranges = const [
-  RulerRange(begin: 30, end: 250),
+  RulerRange(begin: 100, end: 250),
 ];
 
 class MainChoosePickWeight extends StatefulWidget {
@@ -131,7 +130,7 @@ class _MainChoosePickWeightState extends State<MainChoosePickWeight> {
             height: 80,
             rulerMarginTop: 8,
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Container(
@@ -149,7 +148,7 @@ class _MainChoosePickWeightState extends State<MainChoosePickWeight> {
                       .bodyLarge!
                       .copyWith(fontWeight: FontWeight.w800),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -160,7 +159,7 @@ class _MainChoosePickWeightState extends State<MainChoosePickWeight> {
                           fontWeight: FontWeight.w600,
                           color: AppColors.primaryColor),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     Flexible(
