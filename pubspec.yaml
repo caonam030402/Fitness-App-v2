@@ -43,6 +43,7 @@ dependencies:
   chewie: ^1.8.1
   flutter_cache_manager: ^3.3.1
   flutter_animate: ^4.5.0
+  flutter_ruler_picker: ^1.0.6
 
 dev_dependencies:
   flutter_test:

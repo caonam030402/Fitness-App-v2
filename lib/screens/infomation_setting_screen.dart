@@ -1,5 +1,6 @@
 import 'package:fit_ness/components/templates_/infomation_user/choose_birth_year.dart';
 import 'package:fit_ness/components/templates_/infomation_user/choose_gender.dart';
+import 'package:fit_ness/components/templates_/infomation_user/choose_weight.dart';
 import 'package:flutter/material.dart';
 
 class InfomationSetting extends StatelessWidget {
@@ -12,7 +13,7 @@ class InfomationSetting extends StatelessWidget {
           // title: Text("1"),
           ),
       body: PageView(
-        children: [ChooseGender(), ChooseBirthYear()],
+        children: [ChooseWeight()],
       ),
     );
   }
