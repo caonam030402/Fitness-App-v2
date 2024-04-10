@@ -9,5 +9,7 @@ class PathRoute {
   static const workout_completed = '/workout_completed';
   static const workout_setting = '/workout_setting';
   static const choose_coach = 'choose_coach';
+  static const infomation_setting = '/infomation_setting';
   static const splash = '/splash';
+  static const signIn = '/signIn';
 }

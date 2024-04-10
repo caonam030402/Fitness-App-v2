@@ -53,16 +53,16 @@ class StartWorkoutScreen extends StatelessWidget {
 Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
   return Stack(
     children: [
-      SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: VideoItem(
-          videoPlayerController:
-              VideoPlayerController.asset('assets/videos/0410(2).mp4'),
-          looping: true,
-          autoplay: true,
-        ),
-      ),
+      // SizedBox(
+      //   height: MediaQuery.of(context).size.height,
+      //   width: MediaQuery.of(context).size.width,
+      //   child: VideoItem(
+      //     videoPlayerController:
+      //         VideoPlayerController.asset('assets/videos/0410(2).mp4'),
+      //     looping: true,
+      //     autoplay: true,
+      //   ),
+      // ),
       SizedBox(
         key: key,
         height: MediaQuery.of(context).size.height,

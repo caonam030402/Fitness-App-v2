@@ -4,8 +4,10 @@ import 'package:fit_ness/screens/choose_coach_screen.dart';
 import 'package:fit_ness/screens/daily_screen.dart';
 import 'package:fit_ness/screens/discover_screen.dart';
 import 'package:fit_ness/screens/home_screen.dart';
+import 'package:fit_ness/screens/infomation_setting_screen.dart';
 import 'package:fit_ness/screens/me_screen.dart';
 import 'package:fit_ness/screens/personal_screen.dart';
+import 'package:fit_ness/screens/signin_screen.dart';
 import 'package:fit_ness/screens/workout_setting_screen.dart';
 import 'package:fit_ness/screens/workout_start_sreen.dart';
 import 'package:fit_ness/screens/workout_completed.dart';
@@ -164,10 +166,18 @@ class CustomNavigationHelper {
               builder: (context, state) => const ChooseCoachScreen(),
             ),
           ]),
+      GoRoute(
+        path: PathRoute.signIn,
+        builder: (context, state) => const SignInScreen(),
+      ),
+      GoRoute(
+        path: PathRoute.infomation_setting,
+        builder: (context, state) => const InfomationSetting(),
+      ),
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: PathRoute.me_screen,
+      initialLocation: PathRoute.infomation_setting,
       routes: routes,
     );
   }
