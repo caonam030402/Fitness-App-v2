@@ -6,6 +6,7 @@ import 'package:fit_ness/providers/dark_mode_provider.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -29,10 +30,15 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _headerHome(context),
-                  _targetHome(context),
+                  _headerHome(context)
+                      .animate()
+                      .fadeIn(duration: 200.ms)
+                      .slide(),
+                  _targetHome(context).animate().fadeIn(duration: 400.ms),
                   _slideCard(context),
                   _workout(context, dataWorkout)
+                      .animate()
+                      .fadeIn(duration: 500.ms)
                 ],
               ),
             ),

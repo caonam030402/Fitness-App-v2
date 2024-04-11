@@ -8,6 +8,7 @@ import 'package:fit_ness/screens/infomation_setting_screen.dart';
 import 'package:fit_ness/screens/me_screen.dart';
 import 'package:fit_ness/screens/personal_screen.dart';
 import 'package:fit_ness/screens/signin_screen.dart';
+import 'package:fit_ness/screens/splash_screen.dart';
 import 'package:fit_ness/screens/workout_setting_screen.dart';
 import 'package:fit_ness/screens/workout_start_sreen.dart';
 import 'package:fit_ness/screens/workout_completed.dart';
@@ -174,10 +175,14 @@ class CustomNavigationHelper {
         path: PathRoute.infomation_setting,
         builder: (context, state) => const InfomationSetting(),
       ),
+      GoRoute(
+        path: PathRoute.splash,
+        builder: (context, state) => const Splash(),
+      ),
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: PathRoute.infomation_setting,
+      initialLocation: PathRoute.splash,
       routes: routes,
     );
   }
