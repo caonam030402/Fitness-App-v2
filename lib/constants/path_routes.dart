@@ -11,5 +11,6 @@ class PathRoute {
   static const choose_coach = 'choose_coach';
   static const infomation_setting = '/infomation_setting';
   static const splash = '/splash';
+  static const onboarding = '/onboarding';
   static const signIn = '/signIn';
 }

@@ -6,6 +6,7 @@ import 'package:fit_ness/screens/discover_screen.dart';
 import 'package:fit_ness/screens/home_screen.dart';
 import 'package:fit_ness/screens/infomation_setting_screen.dart';
 import 'package:fit_ness/screens/me_screen.dart';
+import 'package:fit_ness/screens/onboarding_screen.dart';
 import 'package:fit_ness/screens/personal_screen.dart';
 import 'package:fit_ness/screens/signin_screen.dart';
 import 'package:fit_ness/screens/splash_screen.dart';
@@ -179,10 +180,14 @@ class CustomNavigationHelper {
         path: PathRoute.splash,
         builder: (context, state) => const Splash(),
       ),
+      GoRoute(
+        path: PathRoute.onboarding,
+        builder: (context, state) => const OnBoardingScreen(),
+      ),
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: PathRoute.splash,
+      initialLocation: PathRoute.onboarding,
       routes: routes,
     );
   }

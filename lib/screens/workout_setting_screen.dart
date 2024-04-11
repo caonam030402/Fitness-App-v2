@@ -174,47 +174,49 @@ Widget _restartAll(context) {
 
 _sheetDetailMusic(BuildContext context) {
   sheet(
-      context,
-      Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: AppStyles.paddingBothSides),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  "Music",
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                Spacer(),
-                Switch(
-                  value: true,
-                  onChanged: (value) {},
-                )
-              ],
-            ),
-            Expanded(
-                child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return CardMusicItem(
-                        active: index == 0 ? true : false,
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return Container();
-                    },
-                    itemCount: 10)),
-            Button(
-              size: SizeButton.large,
-              title: "Done",
-              onTap: () {
-                context.pop();
-              },
-            ),
-            SizedBox(
-              height: AppStyles.paddingBothSides,
-            )
-          ],
-        ),
-      ));
+    context,
+    Padding(
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppStyles.paddingBothSides),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                "Music",
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              Spacer(),
+              Switch(
+                value: true,
+                onChanged: (value) {},
+              )
+            ],
+          ),
+          Expanded(
+              child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return CardMusicItem(
+                      active: index == 0 ? true : false,
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Container();
+                  },
+                  itemCount: 10)),
+          Button(
+            size: SizeButton.large,
+            title: "Done",
+            onTap: () {
+              context.pop();
+            },
+          ),
+          SizedBox(
+            height: AppStyles.paddingBothSides,
+          )
+        ],
+      ),
+    ),
+    MediaQuery.of(context).size.height * 0.9,
+  );
 }

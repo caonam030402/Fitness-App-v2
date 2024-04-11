@@ -17,7 +17,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      context.push(PathRoute.home_screen);
+      context.push(PathRoute.infomation_setting);
     });
   }
 
