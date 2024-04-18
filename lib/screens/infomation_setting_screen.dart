@@ -5,6 +5,7 @@ import 'package:fit_ness/components/templates_/infomation_user/choose_weight.dar
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,12 @@ class InfomationSetting extends StatelessWidget {
                   horizontal: AppStyles.paddingBothSides),
               child: Row(
                 children: [
-                  const Icon(FluentIcons.chevron_left_12_filled),
+                  GestureDetector(
+                    child: const Icon(FluentIcons.chevron_left_12_filled),
+                    onTap: () {
+                      context.pop();
+                    },
+                  ),
                   const Spacer(),
                   Column(
                     children: [
@@ -36,14 +42,14 @@ class InfomationSetting extends StatelessWidget {
                                   .textTheme
                                   .bodyMedium!
                                   .copyWith(color: AppColors.primaryColor)),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text("FITNESS ASSESSMENT",
                               style: Theme.of(context).textTheme.bodyMedium),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       SmoothPageIndicator(

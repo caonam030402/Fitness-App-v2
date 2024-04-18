@@ -1,10 +1,13 @@
 import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/molecules/sheet.dart';
+import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -34,7 +37,8 @@ class OnBoardingScreen extends StatelessWidget {
                     begin: AlignmentDirectional.topCenter,
                     end: Alignment.bottomCenter)),
           ),
-          Expanded(
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
             child: Padding(
               padding: const EdgeInsets.all(AppStyles.paddingBothSides),
               child: Column(
@@ -44,47 +48,59 @@ class OnBoardingScreen extends StatelessWidget {
                   const SizedBox(
                     height: 60,
                   ),
-                  const Text(
-                    "#1 Home",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 45,
-                        fontWeight: FontWeight.w700,
-                        height: 0),
-                  ),
-                  const Text("Workout App",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 45,
-                          height: 0,
-                          fontWeight: FontWeight.w700)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
+                      const Text(
+                        "#1 Home",
+                        style: TextStyle(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: const Text(
-                          "LEAP",
-                          style: TextStyle(color: AppColors.primaryColor),
-                        ),
+                            fontSize: 45,
+                            fontWeight: FontWeight.w700,
+                            height: 0),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text("FITNESS",
+                      const Text("Workout App",
                           style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w400))
+                              color: Colors.white,
+                              fontSize: 45,
+                              height: 0,
+                              fontWeight: FontWeight.w700)),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: const Text(
+                              "LEAP",
+                              style: TextStyle(color: AppColors.primaryColor),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text("FITNESS",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400))
+                        ],
+                      ),
                     ],
-                  ),
+                  )
+                      .animate()
+                      .fadeIn(duration: 900.ms)
+                      .slide(begin: Offset(-20, 0), end: Offset(0, 0)),
                   const Spacer(),
-                  const Button(
+                  Button(
                     size: SizeButton.medium,
                     title: "START NOW",
+                    onTap: () {
+                      context.push(PathRoute.infomation_setting);
+                    },
                   ),
                   const SizedBox(
                     height: 10,

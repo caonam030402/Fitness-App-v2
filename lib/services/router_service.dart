@@ -187,7 +187,7 @@ class CustomNavigationHelper {
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: PathRoute.onboarding,
+      initialLocation: PathRoute.splash,
       routes: routes,
     );
   }

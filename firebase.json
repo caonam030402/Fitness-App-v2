@@ -1,0 +1,22 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "fitness-d5933",
+          "appId": "1:622800692465:android:b4301dd134fe3ebc933550",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "fitness-d5933",
+          "configurations": {
+            "android": "1:622800692465:android:b4301dd134fe3ebc933550",
+            "ios": "1:622800692465:ios:83d7cee6c2061770933550"
+          }
+        }
+      }
+    }
+  }
+}

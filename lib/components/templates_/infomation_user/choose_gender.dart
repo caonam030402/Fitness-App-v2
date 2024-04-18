@@ -1,4 +1,5 @@
 import 'package:fit_ness/components/atoms/button.dart';
+import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,15 @@ Widget _content(context) {
   );
 }
 
+class MainChooseGender extends StatelessWidget {
+  const MainChooseGender({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
 Widget _main(context) {
   return Expanded(
     child: Column(
@@ -68,25 +78,46 @@ Widget _main(context) {
           children: [
             Expanded(
                 child: GestureDetector(
-              child: Container(
-                height: 300,
-                decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(AppStyles.borderRadiusCard),
-                    color: Colors.grey.withOpacity(0.1)),
-                child: Column(
-                  children: [
-                    Image.network(
-                        "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
-                    Text(
-                      "Male",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(fontWeight: FontWeight.w500),
-                    )
-                  ],
-                ),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 300,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.primaryColor),
+                        borderRadius:
+                            BorderRadius.circular(AppStyles.borderRadiusCard),
+                        color: Colors.grey.withOpacity(0.1)),
+                    child: Column(
+                      children: [
+                        Image.network(
+                            "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
+                        Text(
+                          "Male",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Container(
+                      width: 23,
+                      height: 23,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor,
+                      ),
+                      child: const Icon(
+                        FluentIcons.checkmark_12_filled,
+                        size: 15,
+                      ),
+                    ),
+                  )
+                ],
               ),
             )),
             const SizedBox(
@@ -115,8 +146,8 @@ Widget _main(context) {
             )),
           ],
         ),
-        SizedBox(
-          height: 40,
+        const SizedBox(
+          height: 20,
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
@@ -132,11 +163,11 @@ Widget _main(context) {
           ),
         ).animate().fadeIn(duration: 500.ms).slide(),
         const Spacer(),
-        Button(
+        const Button(
           title: "Next",
           size: SizeButton.large,
         ).animate().fadeIn(duration: 500.ms).slide(),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
       ],
