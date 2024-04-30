@@ -219,7 +219,11 @@ Widget _SheetLogin(BuildContext context) {
         Button(
           iconSvg: "assets/svgs/ic_google.svg",
           onTap: () async {
-            await authProvider.authenticateWithGoogle(context: context);
+            final newAccount =
+                await authProvider.authenticateWithGoogle(context: context);
+            newAccount
+                ? context.pushReplacement(PathRoute.infomation_setting)
+                : context.pushReplacement(PathRoute.home_screen);
           },
           size: SizeButton.large,
           title: "Sign with Google",

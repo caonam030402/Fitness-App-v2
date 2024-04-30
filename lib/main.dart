@@ -1,6 +1,7 @@
 import 'package:fit_ness/providers/auth_provider.dart';
 import 'package:fit_ness/providers/dark_mode_provider.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
+import 'package:fit_ness/providers/user_provider.dart';
 import 'package:fit_ness/services/router_service.dart';
 import 'package:fit_ness/themes/app_themes.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (BuildContext context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => UserProvider(),
         ),
       ],
       child: Consumer(

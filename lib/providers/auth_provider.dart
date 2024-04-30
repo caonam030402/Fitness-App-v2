@@ -6,10 +6,9 @@ import 'package:fit_ness/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
-  Future<void> authenticateWithGoogle({required BuildContext context}) async {
+  authenticateWithGoogle({required BuildContext context}) async {
     try {
       await AuthService.signInWithGoogle();
 
@@ -27,11 +26,11 @@ class AuthProvider extends ChangeNotifier {
             'Content-Type': 'application/json; charset=UTF-8',
           },
         );
-        print(res);
+        final jsonResponse = jsonDecode(res.body);
+        return jsonResponse['data']['new'];
       } catch (e) {
         print(e);
       }
-      context.go(PathRoute.home_screen);
     } on NoGoogleAccountChosenException {
       return;
     } catch (e) {

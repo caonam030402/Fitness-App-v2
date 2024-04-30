@@ -152,7 +152,7 @@ class MeScreen extends StatelessWidget {
                   size: SizeButton.large,
                   onTap: () {
                     AuthService.logout();
-                    context.push(PathRoute.splash);
+                    context.pushReplacement(PathRoute.onboarding);
                   },
                 ),
                 Text(

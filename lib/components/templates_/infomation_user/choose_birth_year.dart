@@ -1,10 +1,12 @@
 import 'package:fit_ness/components/atoms/button.dart';
+import 'package:fit_ness/providers/user_provider.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fit_ness/utilities/generate_years.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 
 class ChooseBirthYear extends StatelessWidget {
   const ChooseBirthYear({super.key});
@@ -61,6 +63,8 @@ Widget _content(context) {
 }
 
 Widget _main(context, List<int> years) {
+  final UserProvider userProvider =
+      Provider.of<UserProvider>(context, listen: false);
   return Expanded(
     child: Column(
       children: [
@@ -74,19 +78,14 @@ Widget _main(context, List<int> years) {
                 child: Text(year.toString()),
               );
             }),
-            onSelectedItemChanged: (index) {},
+            onSelectedItemChanged: (index) {
+              userProvider.updateUser(age: years[index]);
+            },
           ),
         ),
         const SizedBox(
           height: 30,
-        ),
-        const Button(
-          title: "Next",
-          size: SizeButton.large,
-        ).animate().fadeIn(duration: 500.ms).slide(),
-        const SizedBox(
-          height: 30,
-        ),
+        )
       ],
     ),
   );
