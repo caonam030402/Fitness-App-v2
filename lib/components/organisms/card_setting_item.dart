@@ -19,10 +19,11 @@ class CardSettingItem extends StatelessWidget {
         context.push(PathRoute.workout_setting);
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingBothSides),
+        padding:
+            const EdgeInsets.symmetric(horizontal: AppStyles.paddingBothSides),
         color: Colors.grey.withOpacity(0.1),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Row(
             children: [
               Container(
@@ -36,15 +37,15 @@ class CardSettingItem extends StatelessWidget {
                   size: 20,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(
-                name ?? "My Proifile",
+                name,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
-              Spacer(),
-              Icon(
+              const Spacer(),
+              const Icon(
                 FluentIcons.chevron_right_16_regular,
                 size: 20,
               ),

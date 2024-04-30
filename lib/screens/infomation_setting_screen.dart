@@ -16,12 +16,14 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:fit_ness/components/templates_/infomation_user/completed_update_info.dart';
 
 const listScreen = [
   ChooseGender(),
   ChooseBirthYear(),
   ChooseHeight(),
-  ChooseWeight()
+  ChooseWeight(),
+  CompletedUpdateInfo()
 ];
 
 class InfomationSetting extends StatelessWidget {

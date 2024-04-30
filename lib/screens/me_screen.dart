@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/organisms/card_setting_item.dart';
 import 'package:fit_ness/constants/path_routes.dart';

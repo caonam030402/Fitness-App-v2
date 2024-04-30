@@ -10,6 +10,7 @@ import 'package:fit_ness/screens/onboarding_screen.dart';
 import 'package:fit_ness/screens/personal_screen.dart';
 import 'package:fit_ness/screens/signin_screen.dart';
 import 'package:fit_ness/screens/splash_screen.dart';
+import 'package:fit_ness/screens/welcom_screen.dart';
 import 'package:fit_ness/screens/workout_setting_screen.dart';
 import 'package:fit_ness/screens/workout_start_sreen.dart';
 import 'package:fit_ness/screens/workout_completed.dart';
@@ -183,6 +184,10 @@ class CustomNavigationHelper {
       GoRoute(
         path: PathRoute.onboarding,
         builder: (context, state) => const OnBoardingScreen(),
+      ),
+      GoRoute(
+        path: PathRoute.welcome,
+        builder: (context, state) => const WelcomeScreen(),
       ),
     ];
     router = GoRouter(

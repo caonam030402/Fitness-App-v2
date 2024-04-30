@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:fit_ness/constants/configs.dart';
-import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 
 class AuthProvider extends ChangeNotifier {

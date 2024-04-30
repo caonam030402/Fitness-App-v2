@@ -2,7 +2,6 @@ import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/molecules/sheet.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/providers/auth_provider.dart';
-import 'package:fit_ness/services/auth_service.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -102,7 +101,7 @@ class OnBoardingScreen extends StatelessWidget {
                     size: SizeButton.medium,
                     title: "START NOW",
                     onTap: () {
-                      context.push(PathRoute.infomation_setting);
+                      context.push(PathRoute.welcome);
                     },
                   ),
                   const SizedBox(

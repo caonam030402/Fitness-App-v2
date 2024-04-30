@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:fit_ness/components/molecules/controller.dart';
-import 'package:fit_ness/components/molecules/video_item.dart';
 import 'package:fit_ness/components/templates_/time_ready_to_go.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
@@ -11,7 +10,6 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
 
 class StartWorkoutScreen extends StatelessWidget {
   const StartWorkoutScreen({super.key});

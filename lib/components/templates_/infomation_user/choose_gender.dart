@@ -1,4 +1,3 @@
-import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/providers/user_provider.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
@@ -87,149 +86,152 @@ Widget _content(context) {
 }
 
 Widget _main(context, int selectedCardIndex, handleCardTap) {
-  return Expanded(
-    child: Column(
-      children: [
-        Row(children: [
-          Expanded(
-              child: GestureDetector(
-            onTap: () {
-              handleCardTap(0, "Male");
-            },
-            child: Stack(
-              children: [
-                Container(
-                  height: 320,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: selectedCardIndex == 0
+  return Consumer<UserProvider>(builder: (context, userProvider, child) {
+    return Expanded(
+      child: Column(
+        children: [
+          Row(children: [
+            Expanded(
+                child: GestureDetector(
+              onTap: () {
+                userProvider.updateUser(gender: "Male");
+                handleCardTap(0, "Male");
+              },
+              child: Stack(
+                children: [
+                  Container(
+                    height: 320,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: userProvider.userInfoUpdate.gender == "Male"
+                                ? AppColors.primaryColor
+                                : AppColors.primaryColor.withOpacity(0)),
+                        borderRadius:
+                            BorderRadius.circular(AppStyles.borderRadiusCard),
+                        color: Colors.grey.withOpacity(0.1)),
+                    child: Column(
+                      children: [
+                        Image.network(
+                            "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
+                        Text(
+                          "Male",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                  ),
+                  userProvider.userInfoUpdate.gender == "Male"
+                      ? Positioned(
+                          top: 10,
+                          right: 10,
+                          child: Container(
+                            width: 23,
+                            height: 23,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.primaryColor,
+                            ),
+                            child: const Icon(
+                              FluentIcons.checkmark_12_filled,
+                              size: 15,
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
+            )),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+                child: GestureDetector(
+              onTap: () {
+                userProvider.updateUser(gender: "Female");
+              },
+              child: Stack(
+                children: [
+                  Container(
+                    height: 320,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: userProvider.userInfoUpdate.gender == "Female"
                               ? AppColors.primaryColor
-                              : AppColors.primaryColor.withOpacity(0)),
-                      borderRadius:
-                          BorderRadius.circular(AppStyles.borderRadiusCard),
-                      color: Colors.grey.withOpacity(0.1)),
-                  child: Column(
-                    children: [
-                      Image.network(
-                          "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
-                      Text(
-                        "Male",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                ),
-                selectedCardIndex == 0
-                    ? Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Container(
-                          width: 23,
-                          height: 23,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.primaryColor,
-                          ),
-                          child: const Icon(
-                            FluentIcons.checkmark_12_filled,
-                            size: 15,
-                          ),
+                              : AppColors.primaryColor.withOpacity(0),
                         ),
-                      )
-                    : Container(),
-              ],
-            ),
-          )),
+                        borderRadius:
+                            BorderRadius.circular(AppStyles.borderRadiusCard),
+                        color: Colors.grey.withOpacity(0.1)),
+                    child: Column(
+                      children: [
+                        Image.network(
+                            "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
+                        Text(
+                          "Female",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                  ),
+                  userProvider.userInfoUpdate.gender == "Female"
+                      ? Positioned(
+                          top: 10,
+                          right: 10,
+                          child: Container(
+                            width: 23,
+                            height: 23,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.primaryColor,
+                            ),
+                            child: const Icon(
+                              FluentIcons.checkmark_12_filled,
+                              size: 15,
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
+            )),
+          ]),
           const SizedBox(
-            width: 10,
+            height: 20,
           ),
-          Expanded(
-              child: GestureDetector(
+          GestureDetector(
             onTap: () {
-              handleCardTap(1, "Female");
+              userProvider.updateUser(gender: "Other");
             },
-            child: Stack(
-              children: [
-                Container(
-                  height: 320,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: selectedCardIndex == 1
-                            ? AppColors.primaryColor
-                            : AppColors.primaryColor.withOpacity(0),
-                      ),
-                      borderRadius:
-                          BorderRadius.circular(AppStyles.borderRadiusCard),
-                      color: Colors.grey.withOpacity(0.1)),
-                  child: Column(
-                    children: [
-                      Image.network(
-                          "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
-                      Text(
-                        "Male",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                ),
-                selectedCardIndex == 1
-                    ? Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Container(
-                          width: 23,
-                          height: 23,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.primaryColor,
-                          ),
-                          child: const Icon(
-                            FluentIcons.checkmark_12_filled,
-                            size: 15,
-                          ),
-                        ),
-                      )
-                    : Container(),
-              ],
-            ),
-          )),
-        ]),
-        const SizedBox(
-          height: 20,
-        ),
-        GestureDetector(
-          onTap: () {
-            handleCardTap(2, "Other");
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-            decoration: BoxDecoration(
-                border: selectedCardIndex != 2
-                    ? null
-                    : Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(100),
-                color: Colors.grey.withOpacity(0.1)),
-            child: Text(
-              "Orthers/I'd rather not say",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(fontWeight: FontWeight.w500),
-            ),
-          ).animate().fadeIn(duration: 500.ms).slide(),
-        ),
-        const Spacer(),
-      ],
-    ),
-  );
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+              decoration: BoxDecoration(
+                  border: userProvider.userInfoUpdate.gender != "Other"
+                      ? null
+                      : Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(100),
+                  color: Colors.grey.withOpacity(0.1)),
+              child: Text(
+                "Orthers/I'd rather not say",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeight.w500),
+              ),
+            ).animate().fadeIn(duration: 500.ms).slide(),
+          ),
+          const Spacer(),
+        ],
+      ),
+    );
+  });
 }
 
 const listGender = [

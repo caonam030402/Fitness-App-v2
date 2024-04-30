@@ -1,6 +1,4 @@
-import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/molecules/rule_picker.dart';
-import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/providers/user_provider.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
@@ -8,7 +6,6 @@ import 'package:fit_ness/utilities/caculate_bmi.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ChooseWeight extends StatelessWidget {

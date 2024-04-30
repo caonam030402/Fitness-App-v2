@@ -1,5 +1,4 @@
 import 'package:fit_ness/models/user.model.dart';
-import 'package:fit_ness/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {

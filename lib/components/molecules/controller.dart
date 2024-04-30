@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';

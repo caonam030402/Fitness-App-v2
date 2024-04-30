@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/services/auth_service.dart';
 import 'package:fit_ness/themes/app_colors.dart';
