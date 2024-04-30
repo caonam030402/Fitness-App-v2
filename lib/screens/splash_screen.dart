@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fit_ness/constants/path_routes.dart';
+import 'package:fit_ness/services/auth_service.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -16,13 +19,22 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () async {
+      final auth = FirebaseAuth.instance;
+
+      if (auth.currentUser != null) {
+        context.push(PathRoute.home_screen);
+        return;
+      }
+
       context.push(PathRoute.onboarding);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final value = AuthService.userStream;
+    print(value);
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: SizedBox(

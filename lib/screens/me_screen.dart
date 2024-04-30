@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/organisms/card_setting_item.dart';
+import 'package:fit_ness/constants/path_routes.dart';
+import 'package:fit_ness/services/auth_service.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ListItem {
   final String title;
@@ -75,71 +80,88 @@ class MeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            width: 80,
-            height: 80,
-            clipBehavior: Clip.hardEdge,
-            decoration: const BoxDecoration(shape: BoxShape.circle),
-            child: Image.network(
-                fit: BoxFit.cover,
-                'https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg'),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Wellcome, CaoNam!",
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          Column(
-            children: List.generate(listSetting.length, (index) {
-              var setting = listSetting[index];
+      child: StreamBuilder(
+          stream: AuthService.userStream,
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return const SizedBox();
+            }
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: setting.title == '' ? 0 : 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppStyles.paddingBothSides),
-                    child: Text(
-                      setting.title,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                  SizedBox(
-                    height: setting.title == '' ? 0 : 10,
-                  ),
-                  Column(
-                    children: List.generate(setting.items.length, (index) {
-                      final item = setting.items[index];
-                      return CardSettingItem(
-                        icon: item.icon,
-                        name: item.name,
-                        color: item.color,
-                      );
-                    }),
-                  )
-                ],
-              );
-            }),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            "Vision 1.21.1",
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
-      ),
+            final user = snapshot.data;
+
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: 80,
+                  height: 80,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: Image.network(fit: BoxFit.cover, '${user?.photoURL}'),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Wellcome, ${user?.displayName ?? 'Your Name'}!",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Column(
+                  children: List.generate(listSetting.length, (index) {
+                    var setting = listSetting[index];
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: setting.title == '' ? 0 : 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: AppStyles.paddingBothSides),
+                          child: Text(
+                            setting.title,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ),
+                        SizedBox(
+                          height: setting.title == '' ? 0 : 10,
+                        ),
+                        Column(
+                          children:
+                              List.generate(setting.items.length, (index) {
+                            final item = setting.items[index];
+                            return CardSettingItem(
+                              icon: item.icon,
+                              name: item.name,
+                              color: item.color,
+                            );
+                          }),
+                        )
+                      ],
+                    );
+                  }),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Button(
+                  title: 'Log out',
+                  size: SizeButton.large,
+                  onTap: () {
+                    AuthService.logout();
+                    context.push(PathRoute.splash);
+                  },
+                ),
+                Text(
+                  "Vision 1.21.1",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            );
+          }),
     );
   }
 }

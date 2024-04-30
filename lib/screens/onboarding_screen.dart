@@ -1,6 +1,8 @@
 import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/molecules/sheet.dart';
 import 'package:fit_ness/constants/path_routes.dart';
+import 'package:fit_ness/providers/auth_provider.dart';
+import 'package:fit_ness/services/auth_service.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -9,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -180,6 +183,8 @@ class OnBoardingScreen extends StatelessWidget {
 }
 
 Widget _SheetLogin(BuildContext context) {
+  late AuthProvider authProvider =
+      Provider.of<AuthProvider>(context, listen: false);
   return Padding(
     padding: const EdgeInsets.all(AppStyles.paddingBothSides),
     child: Column(
@@ -213,6 +218,9 @@ Widget _SheetLogin(BuildContext context) {
         ),
         Button(
           iconSvg: "assets/svgs/ic_google.svg",
+          onTap: () async {
+            await authProvider.authenticateWithGoogle(context: context);
+          },
           size: SizeButton.large,
           title: "Sign with Google",
           backgroundColor: Colors.grey.withOpacity(0.2),

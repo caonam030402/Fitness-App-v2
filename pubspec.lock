@@ -129,6 +129,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  firebase_auth:
+    dependency: "direct main"
+    description:
+      name: firebase_auth
+      sha256: a35269247d7b23703bab35ecdb50462944ac1fcdfcf359a7071506c4ad830bfb
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.19.2"
+  firebase_auth_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_auth_platform_interface
+      sha256: "0edf2466247d18cd2111c4784e43bce49d39cc4d052c122e8060630a136b5a09"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.2.3"
+  firebase_auth_web:
+    dependency: transitive
+    description:
+      name: firebase_auth_web
+      sha256: "86da840704099da55b306ff3587a8aa72b1f541acfba266072263a896fd4b807"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.11.2"
   firebase_core:
     dependency: "direct main"
     description:
@@ -321,7 +345,7 @@ packages:
     source: hosted
     version: "0.15.4"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       sha256: "761a297c042deedc1ffbb156d6e2af13886bb305c2a343a4d972504cd67dd938"
@@ -532,10 +556,10 @@ packages:
     dependency: "direct main"
     description:
       name: shared_preferences
-      sha256: "81429e4481e1ccfb51ede496e916348668fd0921627779233bd24cc3ff6abd02"
+      sha256: d3bbe5553a986e83980916ded2f0b435ef2e1893dfaa29d5a7a790d0eca12180
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.2"
+    version: "2.2.3"
   shared_preferences_android:
     dependency: transitive
     description:
