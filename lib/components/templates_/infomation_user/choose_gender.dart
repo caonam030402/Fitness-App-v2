@@ -60,7 +60,7 @@ Widget _content(context) {
             color: Colors.grey.withOpacity(0.2),
             borderRadius: const BorderRadius.all(
                 Radius.circular(AppStyles.borderRadiusCard))),
-        child: const Row(
+        child: Row(
           children: [
             Icon(
               FluentIcons.lightbulb_16_regular,
@@ -71,6 +71,10 @@ Widget _content(context) {
             ),
             Flexible(
               child: Text(
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeight.w400),
                 softWrap: true,
                 "Knowing your gender can help us tailor the intensity for you based on different metabolic rates.",
               ),
@@ -112,8 +116,7 @@ Widget _main(context, int selectedCardIndex, handleCardTap) {
                         color: Colors.grey.withOpacity(0.1)),
                     child: Column(
                       children: [
-                        Image.network(
-                            "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
+                        Image.asset("assets/images/im_male.png"),
                         Text(
                           "Male",
                           style: Theme.of(context)
@@ -169,8 +172,7 @@ Widget _main(context, int selectedCardIndex, handleCardTap) {
                         color: Colors.grey.withOpacity(0.1)),
                     child: Column(
                       children: [
-                        Image.network(
-                            "https://firebasestorage.googleapis.com/v0/b/ecommerce-67575.appspot.com/o/123123124512%20(1)111.png?alt=media&token=417b081b-e82e-4dce-820a-5e9a394e48db"),
+                        Image.asset("assets/images/im_female.png"),
                         Text(
                           "Female",
                           style: Theme.of(context)

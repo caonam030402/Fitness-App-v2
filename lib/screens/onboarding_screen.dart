@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/molecules/sheet.dart';
+import 'package:fit_ness/components/organisms/login_sheet.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/providers/auth_provider.dart';
 import 'package:fit_ness/themes/app_colors.dart';
@@ -116,8 +117,19 @@ class OnBoardingScreen extends StatelessWidget {
                     onTap: () {
                       sheet(
                         context,
-                        _SheetLogin(
-                          context,
+                        LoginSheet(
+                          onTapLoginWithGoogle: () async {
+                            final newAccount = await AuthProvider()
+                                .authenticateWithGoogle(context: context);
+
+                            if (newAccount != null) {
+                              newAccount
+                                  ? context.pushReplacement(
+                                      PathRoute.infomation_setting)
+                                  : context
+                                      .pushReplacement(PathRoute.home_screen);
+                            }
+                          },
                         ),
                         MediaQuery.of(context).size.height * 0.4,
                       );
@@ -150,76 +162,6 @@ class OnBoardingScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _SheetLogin(BuildContext context) {
-  late AuthProvider authProvider =
-      Provider.of<AuthProvider>(context, listen: false);
-  return Padding(
-    padding: const EdgeInsets.all(AppStyles.paddingBothSides),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              "Continue with",
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const Spacer(),
-            GestureDetector(
-              onTap: () {
-                context.pop();
-              },
-              child: Container(
-                width: 20,
-                height: 20,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.grey),
-                child: const Icon(
-                  FluentIcons.dismiss_12_filled,
-                  size: 13,
-                ),
-              ),
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 25,
-        ),
-        Button(
-          iconSvg: "assets/svgs/ic_google.svg",
-          onTap: () async {
-            final newAccount =
-                await authProvider.authenticateWithGoogle(context: context);
-            newAccount
-                ? context.pushReplacement(PathRoute.infomation_setting)
-                : context.pushReplacement(PathRoute.home_screen);
-          },
-          size: SizeButton.large,
-          title: "Sign with Google",
-          backgroundColor: Colors.grey.withOpacity(0.2),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        const Button(
-          size: SizeButton.large,
-          title: "Facebook",
-          iconSvg: "assets/svgs/ic_facebook.svg",
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        const Button(
-          iconSvg: "assets/svgs/ic_twitter.svg",
-          size: SizeButton.large,
-          title: "Twitter",
-          backgroundColor: Colors.white,
-          textColor: Colors.black,
-        )
-      ],
-    ),
-  );
 }
 
 class IntroItem {

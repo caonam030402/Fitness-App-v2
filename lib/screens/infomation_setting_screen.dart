@@ -1,19 +1,19 @@
-import 'package:fit_ness/API/user.api.dart';
 import 'package:fit_ness/components/atoms/button.dart';
+import 'package:fit_ness/components/molecules/sheet.dart';
+import 'package:fit_ness/components/organisms/login_sheet.dart';
 import 'package:fit_ness/components/templates_/infomation_user/choose_birth_year.dart';
 import 'package:fit_ness/components/templates_/infomation_user/choose_gender.dart';
 import 'package:fit_ness/components/templates_/infomation_user/choose_height.dart';
 import 'package:fit_ness/components/templates_/infomation_user/choose_weight.dart';
 import 'package:fit_ness/components/templates_/infomation_user/feedback.dart';
 import 'package:fit_ness/constants/path_routes.dart';
-import 'package:fit_ness/providers/user_provider.dart';
+import 'package:fit_ness/providers/auth_provider.dart';
 import 'package:fit_ness/services/auth_service.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_ness/components/templates_/infomation_user/completed_update_info.dart';
@@ -33,8 +33,6 @@ class InfomationSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PageController controller = PageController();
-    final userProvider =
-        Provider.of<UserProvider>(context, listen: false).userInfoUpdate;
 
     // print(currentPage);
     return Scaffold(
@@ -116,13 +114,23 @@ class InfomationSetting extends StatelessWidget {
                   int currentPage = controller.page?.round() ?? 0;
                   bool isLastPage = currentPage == listScreen.length - 1;
                   if (isLastPage) {
-                    context.pushReplacement(PathRoute.home_screen);
                     final idUser = AuthService.user?.uid;
-                    final body = userProvider;
 
-                    updateUserAPI(
-                        body: body, id: idUser as String, context: context);
-                    return;
+                    if (idUser != null) {
+                      context.pushReplacement(PathRoute.synchronize_info);
+                    }
+
+                    sheet(
+                      context,
+                      LoginSheet(
+                        onTapLoginWithGoogle: () async {
+                          final newAccount = await AuthProvider()
+                              .authenticateWithGoogle(context: context);
+                          context.pushReplacement(PathRoute.synchronize_info);
+                        },
+                      ),
+                      MediaQuery.of(context).size.height * 0.4,
+                    );
                   }
 
                   controller.nextPage(
@@ -133,7 +141,7 @@ class InfomationSetting extends StatelessWidget {
                 size: SizeButton.large,
               ).animate().fadeIn(duration: 500.ms).slide(),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             )
           ],

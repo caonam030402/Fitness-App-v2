@@ -39,21 +39,24 @@ Widget _content(context) {
             color: Colors.grey.withOpacity(0.2),
             borderRadius: const BorderRadius.all(
                 Radius.circular(AppStyles.borderRadiusCard))),
-        child: const Row(
+        child: Row(
           children: [
             Icon(
-              FluentIcons.lightbulb_16_regular,
+              FluentIcons.notepad_32_regular,
               size: 30,
             ),
             SizedBox(
               width: 20,
             ),
             Flexible(
-              child: Text(
-                softWrap: true,
-                "Knowing your gender can help us tailor the intensity for you based on different metabolic rates.",
-              ),
-            )
+                child: Text(
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(fontWeight: FontWeight.w400),
+              softWrap: true,
+              "It will help us to adjust the workout that best suits your weight.",
+            ))
           ],
         ),
       ).animate().fadeIn(duration: 500.ms).slide(),

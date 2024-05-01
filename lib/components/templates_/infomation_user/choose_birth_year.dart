@@ -39,10 +39,10 @@ Widget _content(context) {
             color: Colors.grey.withOpacity(0.2),
             borderRadius: const BorderRadius.all(
                 Radius.circular(AppStyles.borderRadiusCard))),
-        child: const Row(
+        child: Row(
           children: [
             Icon(
-              FluentIcons.lightbulb_16_regular,
+              FluentIcons.food_cake_12_filled,
               size: 30,
             ),
             SizedBox(
@@ -50,8 +50,12 @@ Widget _content(context) {
             ),
             Flexible(
               child: Text(
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeight.w400),
                 softWrap: true,
-                "Knowing your gender can help us tailor the intensity for you based on different metabolic rates.",
+                "It will help us to adjust the workout that best suits your age group.",
               ),
             )
           ],

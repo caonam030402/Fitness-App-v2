@@ -14,4 +14,5 @@ class PathRoute {
   static const onboarding = '/onboarding';
   static const welcome = '/welcome';
   static const signIn = '/signIn';
+  static const synchronize_info = '/synchronize_info';
 }

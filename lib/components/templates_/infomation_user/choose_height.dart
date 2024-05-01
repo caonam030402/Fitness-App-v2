@@ -4,7 +4,9 @@ import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fit_ness/utilities/caculate_bmi.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
@@ -39,10 +41,10 @@ Widget _content(context) {
             color: Colors.grey.withOpacity(0.2),
             borderRadius: const BorderRadius.all(
                 Radius.circular(AppStyles.borderRadiusCard))),
-        child: const Row(
+        child: Row(
           children: [
             Icon(
-              FluentIcons.lightbulb_16_regular,
+              FluentIcons.notebook_lightning_24_filled,
               size: 30,
             ),
             SizedBox(
@@ -50,8 +52,12 @@ Widget _content(context) {
             ),
             Flexible(
               child: Text(
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeight.w400),
                 softWrap: true,
-                "Knowing your gender can help us tailor the intensity for you based on different metabolic rates.",
+                "It will help us to adjust the workout that best suits your height.",
               ),
             )
           ],
@@ -100,89 +106,72 @@ class _MainChoosePickWeightState extends State<MainChoosePickWeight> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                text: userProvider.userInfoUpdate.height.toString(),
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                    ),
-              ),
-              const TextSpan(
-                text: "Cm",
-              )
-            ])),
             const SizedBox(
               height: 20,
             ),
-            RulerPicker(
-              onValueChanged: (value) {
-                userProvider.updateUser(height: value as double);
-              },
-              rulerBackgroundColor: Colors.transparent,
-              controller: _rulerPickerController,
-              onBuildRulerScaleText: (index, value) {
-                return value.toInt().toString();
-              },
-              ranges: ranges,
-              width: MediaQuery.of(context).size.width -
-                  AppStyles.paddingBothSides * 2,
-              height: 80,
-              rulerMarginTop: 8,
+            Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  top: 0,
+                  right: 0,
+                  left: 0,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                        text: userProvider.userInfoUpdate.height.toString(),
+                        style:
+                            Theme.of(context).textTheme.displayMedium!.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  height: 0,
+                                ),
+                      ),
+                      const TextSpan(
+                        text: "Cm",
+                      )
+                    ])),
+                  ),
+                ),
+                Transform.rotate(
+                  angle: -3.14 / 2,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width -
+                        AppStyles.paddingBothSides * 2,
+                    height: MediaQuery.of(context).size.width -
+                        AppStyles.paddingBothSides * 2,
+                    child: RulerPicker(
+                      marker: Column(
+                        children: [
+                          Container(
+                            width: 2,
+                            height: 100,
+                            color: AppColors.primaryColor,
+                          ),
+                        ],
+                      ),
+                      onValueChanged: (value) {
+                        userProvider.updateUser(height: value as double);
+                      },
+                      width: MediaQuery.of(context).size.width -
+                          AppStyles.paddingBothSides * 2,
+                      height: 80,
+                      rulerBackgroundColor: Colors.transparent,
+                      controller: _rulerPickerController,
+                      onBuildRulerScaleText: (index, value) {
+                        return value.toInt().toString();
+                      },
+                      ranges: ranges,
+                      rulerMarginTop: 8,
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 30,
             ),
-            Container(
-              padding: const EdgeInsets.all(AppStyles.paddingCard),
-              decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(AppStyles.borderRadiusCard),
-                  color: Colors.grey.withOpacity(0.1)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Current BMI",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(fontWeight: FontWeight.w800),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        calculateBmi(userProvider.userInfoUpdate.height ?? 100,
-                                userProvider.userInfoUpdate.weight ?? 120)
-                            .toStringAsFixed(1),
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall!
-                            .copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primaryColor),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Flexible(
-                        child: Text(
-                          "Your have a great potenal to get in better shape, move now",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ).animate().fadeIn(duration: 500.ms).slide(),
           ],
         ),
       );

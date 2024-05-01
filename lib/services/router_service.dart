@@ -1,3 +1,4 @@
+import 'package:fit_ness/components/templates_/infomation_user/synchronize_info.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/screens/bottom_navigation_page.dart';
 import 'package:fit_ness/screens/choose_coach_screen.dart';
@@ -188,6 +189,10 @@ class CustomNavigationHelper {
       GoRoute(
         path: PathRoute.welcome,
         builder: (context, state) => const WelcomeScreen(),
+      ),
+      GoRoute(
+        path: PathRoute.synchronize_info,
+        builder: (context, state) => const SynchronizeInfo(),
       ),
     ];
     router = GoRouter(
