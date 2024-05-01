@@ -23,8 +23,8 @@ const listScreen = [
   ChooseBirthYear(),
   ChooseHeight(),
   ChooseWeight(),
-  CompletedUpdateInfo(),
   UserFeedback(),
+  CompletedUpdateInfo(),
 ];
 
 class InfomationSetting extends StatelessWidget {

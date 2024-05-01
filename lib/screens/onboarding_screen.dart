@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fit_ness/components/atoms/button.dart';
 import 'package:fit_ness/components/molecules/sheet.dart';
 import 'package:fit_ness/constants/path_routes.dart';
@@ -20,25 +21,41 @@ class OnBoardingScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Image.network(
-                fit: BoxFit.cover,
-                "https://img.freepik.com/free-photo/person-doing-indoor-cycling_23-2149270237.jpg?t=st=1712808073~exp=1712811673~hmac=dd00c1bf600d14d89b9e96cf4685d71649f64d648b841558b32338dc9f5de816&w=740"),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [
-                  Colors.black.withOpacity(0),
-                  Colors.black.withOpacity(0.8)
-                ],
-                    begin: AlignmentDirectional.topCenter,
-                    end: Alignment.bottomCenter)),
-          ),
+          CarouselSlider(
+              options: CarouselOptions(
+                autoPlay: true,
+                enlargeCenterPage: true,
+                height: MediaQuery.of(context).size.height,
+                viewportFraction: 1,
+              ),
+              items: List.generate(introItems.length, (index) {
+                final introItem = introItems[index];
+                return Stack(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Image.asset(fit: BoxFit.cover, introItem.image),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [
+                            Colors.black.withOpacity(0),
+                            Colors.black.withOpacity(0.8)
+                          ],
+                              begin: AlignmentDirectional.topCenter,
+                              end: Alignment.bottomCenter)),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppStyles.paddingBothSides),
+                        child: introItem.widget),
+                  ],
+                );
+              })),
           SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Padding(
@@ -50,52 +67,6 @@ class OnBoardingScreen extends StatelessWidget {
                   const SizedBox(
                     height: 60,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "#1 Home",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 45,
-                            fontWeight: FontWeight.w700,
-                            height: 0),
-                      ),
-                      const Text("Workout App",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 45,
-                              height: 0,
-                              fontWeight: FontWeight.w700)),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: const Text(
-                              "LEAP",
-                              style: TextStyle(color: AppColors.primaryColor),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text("FITNESS",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400))
-                        ],
-                      ),
-                    ],
-                  )
-                      .animate()
-                      .fadeIn(duration: 900.ms)
-                      .slide(begin: Offset(-20, 0), end: Offset(0, 0)),
                   const Spacer(),
                   Button(
                     size: SizeButton.medium,
@@ -250,3 +221,136 @@ Widget _SheetLogin(BuildContext context) {
     ),
   );
 }
+
+class IntroItem {
+  final String image;
+  final Widget widget;
+
+  IntroItem({required this.image, required this.widget});
+}
+
+List<IntroItem> introItems = [
+  IntroItem(
+    image: "assets/images/im_intro1.png",
+    widget: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Spacer(),
+        const Text(
+          "#1 Home",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 45,
+              fontWeight: FontWeight.w700,
+              height: 0),
+        ),
+        const Text("Workout App",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 45,
+                height: 0,
+                fontWeight: FontWeight.w700)),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: const Text(
+                "LEAP",
+                style: TextStyle(color: AppColors.primaryColor),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const Text("FITNESS",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w400))
+          ],
+        ),
+        Spacer(),
+      ],
+    )
+        .animate()
+        .fadeIn(duration: 100.ms)
+        .slide(begin: Offset(-100, 0), end: Offset(0, 0)),
+  ),
+  IntroItem(
+    image: "assets/images/im_intro2.png",
+    widget: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Spacer(),
+        const Text(
+          "200M+",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 45,
+              fontWeight: FontWeight.w700,
+              height: 0),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        const Text("HAPPY USER CHOICE",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                height: 0,
+                fontWeight: FontWeight.w500)),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: List.generate(5,
+              (index) => Icon(FluentIcons.star_12_filled, color: Colors.white)),
+        ),
+        Spacer(),
+      ],
+    )
+        .animate()
+        .fadeIn(duration: 100.ms)
+        .slide(begin: Offset(-100, 0), end: Offset(0, 0)),
+  ),
+  IntroItem(
+    image: "assets/images/im_intro3.png",
+    widget: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Spacer(),
+        const Text(
+          "200M+",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 45,
+              fontWeight: FontWeight.w700,
+              height: 0),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        const Text("HAPPY USER CHOICE",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                height: 0,
+                fontWeight: FontWeight.w500)),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: List.generate(5,
+              (index) => Icon(FluentIcons.star_12_filled, color: Colors.white)),
+        ),
+        Spacer(),
+      ],
+    )
+        .animate()
+        .fadeIn(duration: 100.ms)
+        .slide(begin: Offset(-100, 0), end: Offset(0, 0)),
+  ),
+];
