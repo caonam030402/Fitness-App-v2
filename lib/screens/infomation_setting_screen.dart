@@ -4,13 +4,13 @@ import 'package:fit_ness/components/templates_/infomation_user/choose_birth_year
 import 'package:fit_ness/components/templates_/infomation_user/choose_gender.dart';
 import 'package:fit_ness/components/templates_/infomation_user/choose_height.dart';
 import 'package:fit_ness/components/templates_/infomation_user/choose_weight.dart';
+import 'package:fit_ness/components/templates_/infomation_user/feedback.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/providers/user_provider.dart';
 import 'package:fit_ness/services/auth_service.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,8 @@ const listScreen = [
   ChooseBirthYear(),
   ChooseHeight(),
   ChooseWeight(),
-  CompletedUpdateInfo()
+  CompletedUpdateInfo(),
+  UserFeedback(),
 ];
 
 class InfomationSetting extends StatelessWidget {
@@ -132,6 +133,9 @@ class InfomationSetting extends StatelessWidget {
                 size: SizeButton.large,
               ).animate().fadeIn(duration: 500.ms).slide(),
             ),
+            SizedBox(
+              height: 30,
+            )
           ],
         ));
   }

@@ -7,27 +7,44 @@ class CompletedUpdateInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset('assets/images/im_coach.png', height: 100)
-            .animate()
-            .fadeIn(duration: 800.ms)
-            .slide(),
-        Text(
-          "Greate job your succes",
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: Text(
-            "Next, let's tailor a plan to push you to your goals !",
-            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  fontSize: 19,
-                  fontWeight: FontWeight.normal,
-                ),
-          ).animate().fadeIn(duration: 500.ms).slide(),
-        ),
-      ],
+    return SizedBox(
+      height: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/images/im_coach.png', height: 250)
+              .animate()
+              .fadeIn(duration: 800.ms)
+              .slide(),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Greate job your succes",
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge!
+                .copyWith(fontSize: 30),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Text(
+              textAlign: TextAlign.center,
+              "Next, let's tailor a plan to push you to your goals !",
+              style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                    fontSize: 19,
+                    fontWeight: FontWeight.normal,
+                  ),
+            ).animate().fadeIn(duration: 500.ms).slide(),
+          ),
+          SizedBox(
+            height: 70,
+          ),
+        ],
+      ),
     );
   }
 }
