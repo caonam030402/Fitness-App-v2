@@ -21,7 +21,7 @@ class Exercise {
       exerciseImages.add(image);
     }
     return Exercise(
-      id: json['id'],
+      id: json['_id'],
       title: json['title'],
       fitTime: json['fitTime'],
       images: exerciseImages,
@@ -32,7 +32,7 @@ class Exercise {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      '_id': id,
       'title': title,
       'fitTime': fitTime,
       'images': images,
@@ -64,7 +64,7 @@ class Workout {
       exercises.add(Exercise.fromJson(exercise));
     }
     return Workout(
-      id: json['id'],
+      id: json['_id'],
       title: json['title'],
       level: json['level'],
       image: json['image'],
@@ -75,7 +75,7 @@ class Workout {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      '_id': id,
       'title': title,
       'level': level,
       'image': image,
@@ -100,11 +100,11 @@ class ClassicWorkout {
 
   factory ClassicWorkout.fromJson(Map<String, dynamic> json) {
     List<Workout> workouts = [];
-    for (var workoutData in json['list']) {
+    for (var workoutData in json['list'] as List<dynamic>) {
       workouts.add(Workout.fromJson(workoutData));
     }
     return ClassicWorkout(
-      id: json['id'],
+      id: json['_id'],
       title: json['title'],
       image: json['image'],
       list: workouts,
@@ -113,7 +113,7 @@ class ClassicWorkout {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      '_id': id,
       'title': title,
       'image': image,
       'list': list.map((workout) => workout.toJson()).toList(),
