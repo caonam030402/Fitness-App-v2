@@ -9,13 +9,12 @@ import 'package:fit_ness/screens/infomation_setting_screen.dart';
 import 'package:fit_ness/screens/me_screen.dart';
 import 'package:fit_ness/screens/onboarding_screen.dart';
 import 'package:fit_ness/screens/personal_screen.dart';
-import 'package:fit_ness/screens/signin_screen.dart';
 import 'package:fit_ness/screens/splash_screen.dart';
 import 'package:fit_ness/screens/welcom_screen.dart';
 import 'package:fit_ness/screens/workout_setting_screen.dart';
-import 'package:fit_ness/screens/workout_start_sreen.dart';
 import 'package:fit_ness/screens/workout_completed.dart';
 import 'package:fit_ness/screens/workout_detail_screen.dart';
+import 'package:fit_ness/screens/workout_start_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -171,10 +170,6 @@ class CustomNavigationHelper {
             ),
           ]),
       GoRoute(
-        path: PathRoute.signIn,
-        builder: (context, state) => const SignInScreen(),
-      ),
-      GoRoute(
         path: PathRoute.infomation_setting,
         builder: (context, state) => const InfomationSetting(),
       ),
@@ -197,7 +192,7 @@ class CustomNavigationHelper {
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: PathRoute.splash,
+      initialLocation: PathRoute.start_workout,
       routes: routes,
     );
   }

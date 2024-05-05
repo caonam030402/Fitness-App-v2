@@ -12,12 +12,14 @@ class WorkoutDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String idWorkout = GoRouterState.of(context).extra! as String;
     return SafeArea(
       top: true,
       child: Scaffold(
         body: FutureBuilder(
-            future:
-                fetchDetaitWorkout("PLS5_MK8e_MzSNmCQ3_AqbQL1JOM4Yy-_v", "1"),
+            future: fetchDetaitWorkout(
+              idWorkout,
+            ),
             builder: (context, snapshot) {
               final workout = snapshot.data;
               if (workout == null) {

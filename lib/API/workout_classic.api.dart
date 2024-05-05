@@ -24,11 +24,10 @@ Future<List<ClassicWorkout>> fetchListClassicWorkout() async {
   }
 }
 
-Future<Workout> fetchDetaitWorkout(
-    String idClassicWorkout, String idWorkout) async {
+Future<Workout> fetchDetaitWorkout(String idWorkout) async {
   try {
     Response response = await get(
-      Uri.parse('${config.baseUrl}workout/66365095980f17e6293a43cd'),
+      Uri.parse('${config.baseUrl}workout/$idWorkout'),
     );
 
     dynamic data = json.decode(response.body)['data'];

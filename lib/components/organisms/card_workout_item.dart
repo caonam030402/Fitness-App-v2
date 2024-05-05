@@ -13,7 +13,7 @@ class CardWorkoutItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(PathRoute.workout_detail);
+        context.push(PathRoute.workout_detail, extra: workout.id);
       },
       child: Column(
         children: [

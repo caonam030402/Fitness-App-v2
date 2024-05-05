@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Controller extends StatelessWidget {
+  final bool isPaused;
   final int time;
-  final void Function() pauseCountdown;
+
   const Controller({
     super.key,
     required this.time,
-    required this.pauseCountdown,
+    required this.isPaused,
   });
 
   @override
@@ -20,6 +21,8 @@ class Controller extends StatelessWidget {
     final percent = time != 0 ? withButton / time : withButton;
 
     return Consumer(builder: (context, StartWorkoutProvider provider, child) {
+      final startWorkoutProvider =
+          Provider.of<StartWorkoutProvider>(context, listen: false);
       return Row(
         children: [
           const Spacer(),
@@ -44,7 +47,7 @@ class Controller extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              pauseCountdown();
+              startWorkoutProvider.openModalPause();
             },
             child: Container(
               clipBehavior: Clip.hardEdge,

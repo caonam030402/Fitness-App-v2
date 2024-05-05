@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fit_ness/components/molecules/controller.dart';
 import 'package:fit_ness/components/templates_/time_ready_to_go.dart';
+import 'package:fit_ness/components/templates_/workout_pause.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:fit_ness/themes/app_styles.dart';
@@ -35,7 +36,6 @@ class StartWorkoutScreen extends StatelessWidget {
               listLenght,
               (index) => Stack(
                 children: [
-                  // WorkoutPause(),
                   _body(context, UniqueKey(), provider),
                   index == 0 ? const TimeReadyToGo() : Container(),
                 ],
@@ -49,6 +49,8 @@ class StartWorkoutScreen extends StatelessWidget {
 }
 
 Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
+  final startWorkoutProvider =
+      Provider.of<StartWorkoutProvider>(context, listen: false);
   return Stack(
     children: [
       // SizedBox(
@@ -153,12 +155,19 @@ Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
               ),
             ),
             const Spacer(),
-            provider.isTimeUpReadyTogo
-                ? const ControllerExercise(seconds: 5)
+            !startWorkoutProvider.isOpenModalPauseState &&
+                    provider.isTimeUpReadyTogo
+                ? ControllerExercise(
+                    seconds: startWorkoutProvider.currenTime == 0
+                        ? 5
+                        : startWorkoutProvider.currenTime)
                 : Container()
           ],
         ),
       ),
+      startWorkoutProvider.isOpenModalPauseState
+          ? const WorkoutPause()
+          : Container(),
     ],
   );
 }
@@ -175,7 +184,6 @@ class ControllerExercise extends StatefulWidget {
 class _ControllerExerciseState extends State<ControllerExercise> {
   late int _countdownSeconds;
   late Timer _timer;
-  int id = 1;
   bool isPaused = false;
 
   @override
@@ -183,39 +191,21 @@ class _ControllerExerciseState extends State<ControllerExercise> {
     super.initState();
     _countdownSeconds = widget.seconds;
 
-    _startCountdown();
+    _timer = Timer.periodic(const Duration(seconds: 1), _updateCountdown);
   }
 
-  void _pauseCountdown() {
-    _timer.cancel();
+  void _updateCountdown(Timer timer) {
+    final startWorkoutProvider =
+        Provider.of<StartWorkoutProvider>(context, listen: false);
     setState(() {
-      isPaused = true;
+      if (_countdownSeconds > 0) {
+        _countdownSeconds--;
+        startWorkoutProvider.updateTime(_countdownSeconds);
+      } else {
+        timer.cancel();
+        startWorkoutProvider.nextPage();
+      }
     });
-  }
-
-  void _startCountdown() {
-    const oneSecond = Duration(seconds: 1);
-    if (!isPaused) {
-      _timer = Timer.periodic(oneSecond, (timer) {
-        setState(() {
-          if (_countdownSeconds > 0) {
-            _countdownSeconds--;
-          } else {
-            timer.cancel();
-            final startWorkoutProvider =
-                Provider.of<StartWorkoutProvider>(context, listen: false);
-            startWorkoutProvider.nextPage();
-          }
-        });
-      });
-    }
-  }
-
-  void _resumeCountdown() {
-    setState(() {
-      isPaused = false;
-    });
-    _startCountdown();
   }
 
   String formatSeconds(int seconds) {
@@ -255,7 +245,7 @@ class _ControllerExerciseState extends State<ControllerExercise> {
                   .copyWith(fontWeight: FontWeight.w600, fontSize: 70)),
           const Spacer(),
           Controller(
-            pauseCountdown: _pauseCountdown,
+            isPaused: isPaused,
             time: 10,
           ),
           const SizedBox(
