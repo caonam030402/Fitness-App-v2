@@ -44,7 +44,8 @@ class WorkoutDetailScreen extends StatelessWidget {
                         padding: EdgeInsets.all(AppStyles.paddingBothSides),
                         child: Button(
                           onTap: () {
-                            context.push(PathRoute.start_workout);
+                            context.push(PathRoute.start_workout,
+                                extra: workout.exercises);
                           },
                           title: "Start",
                           size: SizeButton.large,

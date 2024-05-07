@@ -192,7 +192,7 @@ class CustomNavigationHelper {
     ];
     router = GoRouter(
       navigatorKey: parentNavigatorKey,
-      initialLocation: PathRoute.start_workout,
+      initialLocation: PathRoute.home_screen,
       routes: routes,
     );
   }

@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:fit_ness/components/molecules/controller.dart';
-import 'package:fit_ness/components/templates_/time_ready_to_go.dart';
-import 'package:fit_ness/components/templates_/workout_pause.dart';
+import 'package:fit_ness/components/templates_/workout/time_ready_to_go.dart';
+import 'package:fit_ness/components/templates_/workout/workout_intro_next.dart';
+import 'package:fit_ness/components/templates_/workout/workout_pause.dart';
 import 'package:fit_ness/constants/path_routes.dart';
+import 'package:fit_ness/models/workout.model.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fit_ness/themes/app_texts.dart';
@@ -17,7 +19,12 @@ class StartWorkoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int listLenght = 5;
+    final exercises = GoRouterState.of(context).extra! as List<Exercise>;
+    int listLenght = exercises.length;
+
+    // final startWorkoutProvider =
+    //     Provider.of<StartWorkoutProvider>(context, listen: false);
+
     return SafeArea(
       top: false,
       child: Scaffold(
@@ -30,17 +37,20 @@ class StartWorkoutScreen extends StatelessWidget {
             });
             return Container();
           }
+
           return IndexedStack(
             index: provider.currenIndexPage,
-            children: List.generate(
-              listLenght,
-              (index) => Stack(
+            children: List.generate(listLenght, (index) {
+              if (provider.intro) {
+                return const WorkoutIntroNext();
+              }
+              return Stack(
                 children: [
                   _body(context, UniqueKey(), provider),
                   index == 0 ? const TimeReadyToGo() : Container(),
                 ],
-              ),
-            ),
+              );
+            }),
           );
         }),
       ),
@@ -158,9 +168,7 @@ Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
             !startWorkoutProvider.isOpenModalPauseState &&
                     provider.isTimeUpReadyTogo
                 ? ControllerExercise(
-                    seconds: startWorkoutProvider.currenTime == 0
-                        ? 5
-                        : startWorkoutProvider.currenTime)
+                    seconds: provider.currenTime == 0 ? 5 : provider.currenTime)
                 : Container()
           ],
         ),
@@ -182,28 +190,26 @@ class ControllerExercise extends StatefulWidget {
 }
 
 class _ControllerExerciseState extends State<ControllerExercise> {
-  late int _countdownSeconds;
   late Timer _timer;
   bool isPaused = false;
 
   @override
   void initState() {
     super.initState();
-    _countdownSeconds = widget.seconds;
-
     _timer = Timer.periodic(const Duration(seconds: 1), _updateCountdown);
   }
 
   void _updateCountdown(Timer timer) {
     final startWorkoutProvider =
         Provider.of<StartWorkoutProvider>(context, listen: false);
+    startWorkoutProvider.updateTime(widget.seconds);
     setState(() {
-      if (_countdownSeconds > 0) {
-        _countdownSeconds--;
-        startWorkoutProvider.updateTime(_countdownSeconds);
+      if (startWorkoutProvider.currenTime > 1) {
+        startWorkoutProvider.updateTime(startWorkoutProvider.currenTime - 1);
       } else {
-        timer.cancel();
+        startWorkoutProvider.updateIntro();
         startWorkoutProvider.nextPage();
+        timer.cancel();
       }
     });
   }
@@ -222,6 +228,9 @@ class _ControllerExerciseState extends State<ControllerExercise> {
 
   @override
   Widget build(BuildContext context) {
+    final startWorkoutProvider =
+        Provider.of<StartWorkoutProvider>(context, listen: false);
+
     return Container(
       decoration: const BoxDecoration(
           color: Colors.black,
@@ -240,9 +249,15 @@ class _ControllerExerciseState extends State<ControllerExercise> {
             style: AppTexts.darkTextTheme.headlineSmall!
                 .copyWith(fontWeight: FontWeight.w600),
           ),
-          Text(formatSeconds(_countdownSeconds),
+          Consumer(builder: (context, StartWorkoutProvider provider, child) {
+            return Text(
+              formatSeconds(startWorkoutProvider.currenTime == 0
+                  ? widget.seconds - 1
+                  : startWorkoutProvider.currenTime - 1),
               style: AppTexts.darkTextTheme.headlineSmall!
-                  .copyWith(fontWeight: FontWeight.w600, fontSize: 70)),
+                  .copyWith(fontWeight: FontWeight.w600, fontSize: 70),
+            );
+          }),
           const Spacer(),
           Controller(
             isPaused: isPaused,

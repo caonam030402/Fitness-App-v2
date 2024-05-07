@@ -40,7 +40,7 @@ class _TimeReadyToGoState extends State<TimeReadyToGo> {
           _countdownSeconds--;
         } else {
           timer.cancel();
-          startWorkoutProvider.update();
+          startWorkoutProvider.updateTimeReadyTogo();
         }
       });
     });

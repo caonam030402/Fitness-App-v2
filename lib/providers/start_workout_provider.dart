@@ -5,14 +5,21 @@ class StartWorkoutProvider extends ChangeNotifier {
   int _currenIndexPage = 0;
   bool isOpenModalPause = false;
   int _currenTime = 0;
+  bool _intro = false;
 
   bool get isTimeUpReadyTogo => _timeUpReadyTogo;
   int get currenIndexPage => _currenIndexPage;
   bool get isOpenModalPauseState => isOpenModalPause;
   int get currenTime => _currenTime;
+  bool get intro => _intro;
 
-  update() {
+  updateTimeReadyTogo() {
     _timeUpReadyTogo = !_timeUpReadyTogo;
+    notifyListeners();
+  }
+
+  updateIntro() {
+    _intro = !_intro;
     notifyListeners();
   }
 
@@ -29,6 +36,7 @@ class StartWorkoutProvider extends ChangeNotifier {
   nextPage() {
     _currenTime = 0;
     _currenIndexPage = _currenIndexPage + 1;
+    _intro = true;
     notifyListeners();
   }
 
