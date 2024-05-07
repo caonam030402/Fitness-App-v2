@@ -78,6 +78,7 @@ class MeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(listSetting);
     return SingleChildScrollView(
       child: StreamBuilder(
           stream: AuthService.userStream,
@@ -143,7 +144,7 @@ class MeScreen extends StatelessWidget {
                     );
                   }),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Button(

@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:fit_ness/components/molecules/controller.dart';
-import 'package:fit_ness/components/templates_/workout/time_ready_to_go.dart';
-import 'package:fit_ness/components/templates_/workout/workout_intro_next.dart';
-import 'package:fit_ness/components/templates_/workout/workout_pause.dart';
+import 'package:fit_ness/features/workout/screens/time_ready_to_go.dart';
+import 'package:fit_ness/features/workout/screens/workout_intro_next.dart';
+import 'package:fit_ness/features/workout/screens/workout_pause.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/models/workout.model.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
+import 'package:fit_ness/features/workout/screens/workout_completed.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fit_ness/themes/app_texts.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -32,10 +33,7 @@ class StartWorkoutScreen extends StatelessWidget {
         body:
             Consumer<StartWorkoutProvider>(builder: (context, provider, child) {
           if (listLenght < provider.currenIndexPage + 1) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.push(PathRoute.workout_completed);
-            });
-            return Container();
+            return const WorkoutCompleted();
           }
 
           return IndexedStack(
