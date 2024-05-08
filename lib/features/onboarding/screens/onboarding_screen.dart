@@ -7,12 +7,9 @@ import 'package:fit_ness/providers/auth_provider.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -51,7 +48,7 @@ class OnBoardingScreen extends StatelessWidget {
                               end: Alignment.bottomCenter)),
                     ),
                     Padding(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             horizontal: AppStyles.paddingBothSides),
                         child: introItem.widget),
                   ],
@@ -177,7 +174,7 @@ List<IntroItem> introItems = [
     widget: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Spacer(),
+        const Spacer(),
         const Text(
           "#1 Home",
           style: TextStyle(
@@ -214,19 +211,19 @@ List<IntroItem> introItems = [
                     TextStyle(color: Colors.white, fontWeight: FontWeight.w400))
           ],
         ),
-        Spacer(),
+        const Spacer(),
       ],
     )
         .animate()
         .fadeIn(duration: 100.ms)
-        .slide(begin: Offset(-100, 0), end: Offset(0, 0)),
+        .slide(begin: const Offset(-100, 0), end: const Offset(0, 0)),
   ),
   IntroItem(
     image: "assets/images/im_intro2.png",
     widget: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Spacer(),
+        const Spacer(),
         const Text(
           "200M+",
           style: TextStyle(
@@ -248,22 +245,24 @@ List<IntroItem> introItems = [
           height: 10,
         ),
         Row(
-          children: List.generate(5,
-              (index) => Icon(FluentIcons.star_12_filled, color: Colors.white)),
+          children: List.generate(
+              5,
+              (index) =>
+                  const Icon(FluentIcons.star_12_filled, color: Colors.white)),
         ),
-        Spacer(),
+        const Spacer(),
       ],
     )
         .animate()
         .fadeIn(duration: 100.ms)
-        .slide(begin: Offset(-100, 0), end: Offset(0, 0)),
+        .slide(begin: const Offset(-100, 0), end: const Offset(0, 0)),
   ),
   IntroItem(
     image: "assets/images/im_intro3.png",
     widget: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Spacer(),
+        const Spacer(),
         const Text(
           "200M+",
           style: TextStyle(
@@ -285,14 +284,16 @@ List<IntroItem> introItems = [
           height: 10,
         ),
         Row(
-          children: List.generate(5,
-              (index) => Icon(FluentIcons.star_12_filled, color: Colors.white)),
+          children: List.generate(
+              5,
+              (index) =>
+                  const Icon(FluentIcons.star_12_filled, color: Colors.white)),
         ),
-        Spacer(),
+        const Spacer(),
       ],
     )
         .animate()
         .fadeIn(duration: 100.ms)
-        .slide(begin: Offset(-100, 0), end: Offset(0, 0)),
+        .slide(begin: const Offset(-100, 0), end: const Offset(0, 0)),
   ),
 ];

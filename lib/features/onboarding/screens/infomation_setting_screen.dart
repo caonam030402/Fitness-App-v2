@@ -7,7 +7,6 @@ import 'package:fit_ness/components/templates_/infomation_user/choose_height.dar
 import 'package:fit_ness/components/templates_/infomation_user/choose_weight.dart';
 import 'package:fit_ness/components/templates_/infomation_user/feedback.dart';
 import 'package:fit_ness/constants/path_routes.dart';
-import 'package:fit_ness/providers/auth_provider.dart';
 import 'package:fit_ness/services/auth_service.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
@@ -124,8 +123,6 @@ class InfomationSetting extends StatelessWidget {
                       context,
                       LoginSheet(
                         onTapLoginWithGoogle: () async {
-                          final newAccount = await AuthProvider()
-                              .authenticateWithGoogle(context: context);
                           context.pushReplacement(PathRoute.synchronize_info);
                         },
                       ),

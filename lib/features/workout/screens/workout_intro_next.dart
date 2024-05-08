@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fit_ness/components/atoms/button.dart';
+import 'package:fit_ness/models/workout.model.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
@@ -10,7 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutIntroNext extends StatefulWidget {
-  const WorkoutIntroNext({super.key});
+  final Exercise exercise;
+  final int index;
+  final int listLenght;
+  const WorkoutIntroNext(
+      {super.key,
+      required this.exercise,
+      required this.index,
+      required this.listLenght});
 
   @override
   State<WorkoutIntroNext> createState() => _WorkoutIntroNextState();
@@ -112,19 +120,19 @@ class _WorkoutIntroNextState extends State<WorkoutIntroNext> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Next 2/16",
+                      "Next ${widget.index + 1}/${widget.listLenght}",
                       style: AppTexts.darkTextTheme.bodyLarge!
                           .copyWith(fontSize: 17, fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      "ABDOMINAL",
+                      widget.exercise.title,
                       style: AppTexts.darkTextTheme.bodyLarge!
                           .copyWith(fontSize: 20, fontWeight: FontWeight.w800),
                     )
                   ],
                 ),
                 Text(
-                  "x16",
+                  formatSeconds(widget.exercise.fitTime),
                   style: AppTexts.darkTextTheme.bodyLarge!
                       .copyWith(fontSize: 20, fontWeight: FontWeight.w800),
                 )

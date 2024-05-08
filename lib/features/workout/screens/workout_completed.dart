@@ -31,7 +31,7 @@ class WorkoutCompleted extends StatelessWidget {
                     size: SizeButton.large,
                     title: "FINISH",
                     onTap: () {
-                      context.push(PathRoute.home_screen);
+                      context.push(PathRoute.workout_detail);
                     },
                   ),
                 ))

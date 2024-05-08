@@ -1,5 +1,6 @@
 import 'package:fit_ness/providers/auth_provider.dart';
 import 'package:fit_ness/providers/dark_mode_provider.dart';
+import 'package:fit_ness/providers/music_provider.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:fit_ness/providers/user_provider.dart';
 import 'package:fit_ness/services/router_service.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (BuildContext context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => MusicProvider(),
         ),
       ],
       child: Consumer(

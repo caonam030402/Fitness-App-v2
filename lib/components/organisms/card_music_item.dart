@@ -1,10 +1,12 @@
+import 'package:fit_ness/DB/list_music.db.dart';
 import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
 class CardMusicItem extends StatelessWidget {
+  final Music music;
   final bool active;
-  const CardMusicItem({super.key, this.active = false});
+  const CardMusicItem({super.key, this.active = false, required this.music});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +39,7 @@ class CardMusicItem extends StatelessWidget {
                 ))),
                 width: 60,
                 height: 60,
-                child: Image.network(
-                    "https://photo-zmp3.zadn.vn/avatars/f/b/f/1/fbf16d7352a3eea6be8cf5d4b217516d.jpg"),
+                child: Image.network(music.imageUrl),
               ),
             ),
             const SizedBox(
@@ -48,11 +49,11 @@ class CardMusicItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Power of Fire",
+                  music.name,
                   style: Theme.of(context).textTheme.bodyLarge!,
                 ),
                 Text(
-                  "01:51",
+                  music.duration,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!

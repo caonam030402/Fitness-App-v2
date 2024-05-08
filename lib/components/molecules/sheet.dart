@@ -9,11 +9,15 @@ Future sheet(BuildContext context, Widget widget, double? height) {
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(30))),
     context: context,
-    builder: (context) {
-      return SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: height ?? MediaQuery.of(context).size.height * 0.9,
-          child: widget);
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: height ?? MediaQuery.of(context).size.height * 0.9,
+              child: widget);
+        },
+      );
     },
   );
 }

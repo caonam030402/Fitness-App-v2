@@ -33,7 +33,6 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     final value = AuthService.userStream;
-    print(value);
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: SizedBox(
@@ -41,7 +40,7 @@ class _SplashState extends State<Splash> {
         child: Column(
           children: [
             const Spacer(),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             const Text(
@@ -81,7 +80,7 @@ class _SplashState extends State<Splash> {
                         color: Colors.white, fontWeight: FontWeight.w400))
               ],
             ),
-            Spacer(),
+            const Spacer(),
             SpinKitFadingFour(
               size: 30,
               itemBuilder: (BuildContext context, int index) {
@@ -92,7 +91,7 @@ class _SplashState extends State<Splash> {
                 );
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             )
           ],

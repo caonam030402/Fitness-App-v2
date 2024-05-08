@@ -52,6 +52,7 @@ dependencies:
   firebase_auth: ^4.19.2
   http: ^1.2.1
   percent_indicator: ^4.2.3
+  audioplayers: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,7 @@ flutter:
     - assets/images/
     - assets/videos/
     - assets/svgs/
+    - assets/audios/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -6,25 +6,55 @@ import 'package:fit_ness/features/workout/screens/workout_intro_next.dart';
 import 'package:fit_ness/features/workout/screens/workout_pause.dart';
 import 'package:fit_ness/constants/path_routes.dart';
 import 'package:fit_ness/models/workout.model.dart';
+import 'package:fit_ness/providers/music_provider.dart';
 import 'package:fit_ness/providers/start_workout_provider.dart';
 import 'package:fit_ness/features/workout/screens/workout_completed.dart';
+import 'package:fit_ness/themes/app_colors.dart';
 import 'package:fit_ness/themes/app_styles.dart';
 import 'package:fit_ness/themes/app_texts.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:provider/provider.dart';
 
-class StartWorkoutScreen extends StatelessWidget {
+class StartWorkoutScreen extends StatefulWidget {
   const StartWorkoutScreen({super.key});
+
+  @override
+  State<StartWorkoutScreen> createState() => _StartWorkoutScreenState();
+}
+
+class _StartWorkoutScreenState extends State<StartWorkoutScreen> {
+  late AudioPlayer player = AudioPlayer();
+
+  @override
+  void initState() {
+    final MusicProvider provider =
+        Provider.of<MusicProvider>(context, listen: false);
+    super.initState();
+
+    player = AudioPlayer();
+
+    player.setReleaseMode(ReleaseMode.stop);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await player.setSource(AssetSource(provider.currentMusic.musicUrl));
+      await player.resume();
+    });
+  }
+
+  @override
+  void dispose() {
+    player.stop();
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final exercises = GoRouterState.of(context).extra! as List<Exercise>;
     int listLenght = exercises.length;
-
-    // final startWorkoutProvider =
-    //     Provider.of<StartWorkoutProvider>(context, listen: false);
 
     return SafeArea(
       top: false,
@@ -39,12 +69,23 @@ class StartWorkoutScreen extends StatelessWidget {
           return IndexedStack(
             index: provider.currenIndexPage,
             children: List.generate(listLenght, (index) {
+              final exercise = exercises[index];
               if (provider.intro) {
-                return const WorkoutIntroNext();
+                return WorkoutIntroNext(
+                  exercise: exercise,
+                  index: index,
+                  listLenght: listLenght,
+                );
               }
               return Stack(
                 children: [
-                  _body(context, UniqueKey(), provider),
+                  _body(
+                    index,
+                    context,
+                    UniqueKey(),
+                    provider,
+                    exercises,
+                  ),
                   index == 0 ? const TimeReadyToGo() : Container(),
                 ],
               );
@@ -56,9 +97,21 @@ class StartWorkoutScreen extends StatelessWidget {
   }
 }
 
-Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
+Widget _body(
+  int index,
+  BuildContext context,
+  Key key,
+  StartWorkoutProvider provider,
+  List<Exercise> exercises,
+) {
   final startWorkoutProvider =
       Provider.of<StartWorkoutProvider>(context, listen: false);
+
+  final exercise = exercises[index];
+  final nextExercise =
+      index >= 0 && index < exercises.length - 1 ? exercises[index + 1] : null;
+
+  // print(nextExercise != null ? nextExercise.title : 'null');
   return Stack(
     children: [
       // SizedBox(
@@ -84,14 +137,18 @@ Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(10, (index) {
+                    children: List.generate(exercises.length, (index) {
+                      final isActive = index == provider.currenIndexPage;
+
                       return Row(
                         children: [
                           Container(
                             width: MediaQuery.of(context).size.width / 20,
                             height: 5,
                             decoration: BoxDecoration(
-                                color: Colors.black26,
+                                color: isActive
+                                    ? AppColors.primaryColor
+                                    : Colors.black26,
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                           const SizedBox(width: 10),
@@ -127,7 +184,7 @@ Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "SIT-UPS",
+                                exercise.title.toUpperCase(),
                                 style: AppTexts.lightTextTheme.bodyLarge!
                                     .copyWith(fontWeight: FontWeight.w800),
                               ),
@@ -141,17 +198,22 @@ Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
                           const SizedBox(
                             width: 20,
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey.withOpacity(0.2)),
-                            width: 32,
-                            height: 32,
-                            child: const Center(
-                              child: Icon(
-                                FluentIcons.settings_16_filled,
-                                size: 15,
-                                color: Colors.black,
+                          GestureDetector(
+                            onTap: () {
+                              context.push(PathRoute.workout_setting);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey.withOpacity(0.2)),
+                              width: 32,
+                              height: 32,
+                              child: const Center(
+                                child: Icon(
+                                  FluentIcons.settings_16_filled,
+                                  size: 15,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
@@ -166,7 +228,10 @@ Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
             !startWorkoutProvider.isOpenModalPauseState &&
                     provider.isTimeUpReadyTogo
                 ? ControllerExercise(
-                    seconds: provider.currenTime == 0 ? 5 : provider.currenTime)
+                    exercise: exercise,
+                    seconds: provider.currenTime == 0
+                        ? exercise.fitTime
+                        : provider.currenTime)
                 : Container()
           ],
         ),
@@ -180,8 +245,13 @@ Widget _body(BuildContext context, Key key, StartWorkoutProvider provider) {
 
 class ControllerExercise extends StatefulWidget {
   final int seconds;
+  final Exercise exercise;
 
-  const ControllerExercise({super.key, required this.seconds});
+  const ControllerExercise({
+    super.key,
+    required this.seconds,
+    required this.exercise,
+  });
 
   @override
   State<ControllerExercise> createState() => _ControllerExerciseState();
@@ -243,7 +313,7 @@ class _ControllerExerciseState extends State<ControllerExercise> {
             height: 30,
           ),
           Text(
-            "JUMPING JACKS",
+            widget.exercise.title.toUpperCase(),
             style: AppTexts.darkTextTheme.headlineSmall!
                 .copyWith(fontWeight: FontWeight.w600),
           ),
